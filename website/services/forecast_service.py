@@ -7,7 +7,10 @@ from typing import Dict, Any, List, Optional, Tuple
 import pandas as pd
 import numpy as np
 
-from services.calendar_service import calendar_service
+try:
+    from services.calendar_service import calendar_service
+except ImportError:
+    from website.services.calendar_service import calendar_service
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 

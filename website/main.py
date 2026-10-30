@@ -3,12 +3,21 @@ import io
 import csv
 import json
 import time
+import sys
 import asyncio
 import logging
 from collections import defaultdict
 from datetime import datetime, date, timedelta, timezone
 from pathlib import Path
 from typing import Optional, List, Dict, Any
+
+# Ensure website directory and root directory are in sys.path for Vercel serverless execution
+_CURRENT_DIR = Path(__file__).resolve().parent
+if str(_CURRENT_DIR) not in sys.path:
+    sys.path.insert(0, str(_CURRENT_DIR))
+_PARENT_DIR = _CURRENT_DIR.parent
+if str(_PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(_PARENT_DIR))
 
 from fastapi import FastAPI, HTTPException, Depends, status, Request, Response, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,12 +29,20 @@ from pydantic import BaseModel, EmailStr, Field
 from jose import JWTError, jwt
 from dotenv import load_dotenv
 
-from services.db_service import DualModeDatabase, hash_password, verify_password
-from services.llm_service import generate_daily_briefing, answer_assistant_chat, get_llm_info
-from services.forecast_service import forecast_engine
-from services.csv_validator import csv_validator
-from services.weather_service import weather_service
-from services.calendar_service import calendar_service
+try:
+    from services.db_service import DualModeDatabase, hash_password, verify_password
+    from services.llm_service import generate_daily_briefing, answer_assistant_chat, get_llm_info
+    from services.forecast_service import forecast_engine
+    from services.csv_validator import csv_validator
+    from services.weather_service import weather_service
+    from services.calendar_service import calendar_service
+except ImportError:
+    from website.services.db_service import DualModeDatabase, hash_password, verify_password
+    from website.services.llm_service import generate_daily_briefing, answer_assistant_chat, get_llm_info
+    from website.services.forecast_service import forecast_engine
+    from website.services.csv_validator import csv_validator
+    from website.services.weather_service import weather_service
+    from website.services.calendar_service import calendar_service
 
 def get_product_image_url(name: str, category: str = "") -> str:
     n = (name or "").lower()

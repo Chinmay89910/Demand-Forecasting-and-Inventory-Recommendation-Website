@@ -7,7 +7,10 @@ from datetime import date, timedelta
 from typing import List, Dict, Any, Optional, Tuple
 from dotenv import load_dotenv
 
-from services.forecast_service import forecast_engine
+try:
+    from services.forecast_service import forecast_engine
+except ImportError:
+    from website.services.forecast_service import forecast_engine
 
 load_dotenv()
 
