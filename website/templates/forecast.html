@@ -1,0 +1,629 @@
+{% extends "base.html" %}
+
+{% block title %}Sales Forecast | RestockIQ{% endblock %}
+
+{% block content %}
+<div class="space-y-5 max-w-7xl mx-auto pb-10">
+
+  <!-- Page Header & Refresh -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight">Sales Forecast</h1>
+      <p class="text-xs sm:text-sm text-[#6B7280] mt-1">See expected demand for your products using past sales, weather conditions and upcoming holidays.</p>
+    </div>
+    <div class="flex items-center gap-3 self-end sm:self-center">
+      <span class="text-xs text-[#6B7280] hidden md:inline">Last updated {{ last_updated_str }}</span>
+      <button onclick="window.location.reload()" 
+              class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-[#D1D5DB] text-xs font-semibold text-[#1B4332] bg-white hover:bg-[#F9FAFB] shadow-xs transition">
+        <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+        <span>Refresh Forecast</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter & Model Inputs Bar -->
+  <div class="bg-white rounded-xl border border-[#E5E7EB] p-3.5 sm:p-4 shadow-xs">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Selectors Group -->
+      <div class="flex flex-wrap items-center gap-4">
+        <!-- Select Product -->
+        <div class="flex items-center gap-2">
+          <label for="productSelect" class="text-xs font-semibold text-[#4B5563] whitespace-nowrap">Select Product:</label>
+          <div class="relative flex items-center">
+            <img src="{{ current_item.image_url }}" alt="" class="w-7 h-7 object-contain rounded-md bg-[#F9FAFB] p-0.5 border border-[#E5E7EB] mr-2">
+            <select id="productSelect" onchange="window.location.href='/forecast/' + this.value" 
+                    class="bg-white border border-[#D1D5DB] rounded-lg px-3 py-1.5 text-xs font-semibold text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#1B4332] shadow-2xs cursor-pointer">
+              {% for it in all_items %}
+              <option value="{{ it.id }}" {% if it.id == current_item.id %}selected{% endif %}>
+                {{ it.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <!-- Forecast Period -->
+        <div class="flex items-center gap-2">
+          <label for="periodSelect" class="text-xs font-semibold text-[#4B5563] whitespace-nowrap">Forecast Period:</label>
+          <select id="periodSelect" class="bg-white border border-[#D1D5DB] rounded-lg px-3 py-1.5 text-xs font-medium text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#1B4332] shadow-2xs">
+            <option selected>Next 7 Days</option>
+            <option>Next 14 Days</option>
+            <option>Next 30 Days</option>
+          </select>
+        </div>
+
+        <!-- Store Location -->
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs font-semibold text-[#4B5563] whitespace-nowrap">Store Location:</span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] text-xs font-medium text-[#1F2937]">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#1B4332]"></i>
+            <span>{{ shop_location }}</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Model Inputs Pills -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-xs font-semibold text-[#6B7280]">Model Inputs:</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#ECFDF5] text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+          <i data-lucide="bar-chart-2" class="w-3 h-3 text-emerald-600"></i>
+          <span>Historical Sales</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#EFF6FF] text-blue-800 text-[11px] font-semibold border border-blue-200">
+          <i data-lucide="cloud-sun" class="w-3 h-3 text-blue-600"></i>
+          <span>Weather Forecast</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FEF3C7] text-amber-800 text-[11px] font-semibold border border-amber-200">
+          <i data-lucide="calendar" class="w-3 h-3 text-amber-600"></i>
+          <span>Holiday Calendar</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Grid Row 1: 2 Metric Cards + Weather Forecast (Next 7 Days) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+    
+    <!-- Left Column: 2 Summary Metric Cards (8 cols on lg) -->
+    <div class="lg:col-span-7 xl:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      
+      <!-- Card 1: Expected Sales Today -->
+      <div class="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#ECFDF5] text-emerald-700 flex items-center justify-center">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-xs font-medium text-[#6B7280]">Expected Sales Today</div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-[#111827] mt-0.5">
+              {{ comprehensive.expected_sales_today }} units
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-emerald-700 font-medium mt-3 flex items-center gap-1">
+          <span>{{ comprehensive.expected_sales_today_note }}</span>
+        </div>
+      </div>
+
+      <!-- Card 2: Total Expected Sales (7 Days) -->
+      <div class="bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#EFF6FF] text-blue-700 flex items-center justify-center">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-xs font-medium text-[#6B7280]">Total Expected Sales (7 Days)</div>
+            <div class="text-2xl sm:text-3xl font-extrabold text-[#111827] mt-0.5">
+              {{ comprehensive.total_expected_sales_7d }} units
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-[#6B7280] font-medium mt-3">
+          {{ comprehensive.date_range_7d }}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Weather Forecast (Next 7 Days) (5 cols on lg) -->
+    <div class="lg:col-span-5 xl:col-span-5 bg-white rounded-xl border border-[#E5E7EB] p-4 sm:p-5 shadow-xs flex flex-col justify-between">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <i data-lucide="cloud-rain" class="w-4 h-4 text-blue-600"></i>
+          <h3 class="text-xs sm:text-sm font-bold text-[#111827]">Weather Forecast (Next 7 Days)</h3>
+        </div>
+        <span class="text-[10px] text-[#6B7280]">Source: Open-Meteo Live API</span>
+      </div>
+
+      <!-- Real-Time Minute-to-Minute Live Telemetry Strip -->
+      <div id="liveWeatherTelemetryBar" class="flex flex-wrap items-center justify-between bg-blue-50/70 border border-blue-100 rounded-lg px-2.5 py-1.5 mb-2 text-[11px]">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> Live Telemetry (Minute-to-Minute)
+          </span>
+          <span class="font-bold text-[#111827]" id="liveWeatherCondition">{{ live_weather.condition if live_weather else 'Partly Cloudy' }}</span>
+          <span class="text-gray-300">|</span>
+          <span class="font-extrabold text-[#111827]" id="liveWeatherTemp">{{ live_weather.temperature if live_weather else '32' }}°C</span>
+          {% if live_weather and live_weather.feels_like %}
+          <span class="text-[10px] text-gray-500 hidden sm:inline">(Feels <span id="liveFeelsLike">{{ live_weather.feels_like }}</span>°C)</span>
+          {% endif %}
+        </div>
+        <div class="flex items-center gap-2.5 text-[10px] text-gray-600 font-medium mt-1 sm:mt-0">
+          <span>💧 <strong id="liveWeatherHumidity" class="text-gray-800">{{ live_weather.humidity if live_weather else '50' }}%</strong></span>
+          <span>🌧️ <strong id="liveWeatherPrecip" class="text-gray-800">{{ live_weather.precipitation_mm if live_weather else '0.0' }}mm</strong></span>
+          <span>💨 <strong id="liveWeatherWind" class="text-gray-800">{{ live_weather.wind_kmh if live_weather else '8.0' }}km/h</strong></span>
+          <span class="text-[9px] text-gray-400 font-mono" id="liveWeatherTime">⏱️ {{ live_weather.updated_at_display if live_weather else 'Just now' }}</span>
+        </div>
+      </div>
+
+      <!-- 7 Horizontal Day Columns -->
+      <div class="grid grid-cols-7 gap-1 pt-2 border-t border-[#F3F4F6] text-center">
+        {% for w in weather_7d %}
+        <div class="flex flex-col items-center p-1 rounded-lg hover:bg-[#F9FAFB] transition">
+          <span class="text-[10px] font-bold {% if loop.first %}text-emerald-700{% else %}text-[#4B5563]{% endif %}">{{ w.day_short }}</span>
+          <span class="text-[9px] text-[#9CA3AF] mb-1">{{ w.date_short }}</span>
+          <span class="text-lg leading-none my-1" title="{{ w.condition }}">{{ w.icon }}</span>
+          <span class="text-xs font-extrabold text-[#111827] mt-0.5">{{ w.temp }}°C</span>
+          <span class="text-[9px] text-[#6B7280] truncate w-full mt-0.5 font-medium">{{ w.condition }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Grid Row 2: Actual vs Predicted Sales Chart + Upcoming Holidays & Events -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+    
+    <!-- Left Column: Actual vs Predicted Sales Chart (7 or 8 cols on lg) -->
+    <div class="lg:col-span-7 xl:col-span-7 bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs flex flex-col justify-between">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2 pb-2 border-b border-[#F3F4F6]">
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-[#111827]">Actual vs Predicted Sales</h3>
+        </div>
+        <!-- Legend Pills -->
+        <div class="flex items-center gap-3 text-xs flex-wrap">
+          <div class="inline-flex items-center gap-1.5 text-[#374151]">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span>
+            <span class="font-medium">Actual Sales (Past)</span>
+          </div>
+          <div class="inline-flex items-center gap-1.5 text-[#374151]">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#16A34A]"></span>
+            <span class="font-medium">Predicted Demand</span>
+          </div>
+          <div class="inline-flex items-center gap-1.5 text-[#374151]">
+            <span class="w-3.5 h-2.5 rounded bg-emerald-100 border border-emerald-300"></span>
+            <span class="font-medium text-[#6B7280]">Uncertainty Range</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="h-64 sm:h-72 w-full relative">
+        <canvas id="actualVsPredictedCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Right Column: Upcoming Holidays & Events (5 cols on lg) -->
+    <div class="lg:col-span-5 xl:col-span-5 bg-white rounded-xl border border-[#E5E7EB] p-5 shadow-xs flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-[#F3F4F6]">
+          <div class="flex items-center gap-2">
+            <i data-lucide="calendar" class="w-4 h-4 text-purple-600"></i>
+            <h3 class="text-xs sm:text-sm font-bold text-[#111827]">Upcoming Holidays & Events</h3>
+          </div>
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <i data-lucide="shield-check" class="w-3 h-3 text-emerald-600"></i> Live India API (MH)
+          </span>
+        </div>
+
+        <div class="space-y-2.5">
+          {% for ev in comprehensive.events %}
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] hover:bg-white hover:border-[#D1D5DB] transition gap-2">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-7 h-7 rounded-lg {% if ev.color == 'purple' %}bg-purple-100 text-purple-700{% elif ev.color == 'amber' %}bg-amber-100 text-amber-800{% elif ev.color == 'orange' %}bg-orange-100 text-orange-800{% else %}bg-rose-100 text-rose-700{% endif %} flex items-center justify-center flex-shrink-0">
+                <i data-lucide="{{ ev.icon }}" class="w-3.5 h-3.5"></i>
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-[#111827] truncate">{{ ev.date }}</div>
+                <div class="text-[11px] text-[#6B7280] font-medium truncate">{{ ev.title }}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <span class="px-2 py-0.5 rounded-full {% if ev.color == 'red' %}bg-rose-50 text-rose-700 border-rose-200{% elif ev.color == 'amber' %}bg-amber-50 text-amber-800 border-amber-200{% elif ev.color == 'purple' %}bg-purple-50 text-purple-700 border-purple-200{% else %}bg-slate-100 text-slate-700 border-slate-200{% endif %} text-[10px] font-bold border">
+                {{ ev.tag }}
+              </span>
+              {% if ev.lift_pct and ev.lift_pct not in ['Upcoming', '0% (Baseline)', '0% (Optional Holiday)'] %}
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                {{ ev.lift_pct }}
+              </span>
+              {% endif %}
+            </div>
+          </div>
+          {% else %}
+          <div class="p-4 text-center text-xs text-[#6B7280]">
+            No major holidays or festivals within the upcoming 7 days.
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Freshness & Provider Footnote -->
+      <div class="mt-3 pt-2.5 border-t border-[#F3F4F6] flex flex-wrap items-center justify-between text-[11px] text-[#6B7280] gap-1">
+        <span class="inline-flex items-center gap-1">
+          <i data-lucide="radio" class="w-3 h-3 text-emerald-600"></i>
+          Synced: {{ comprehensive.calendar_metadata.last_refreshed_display or (comprehensive.calendar_metadata.last_refreshed[:16].replace('T', ' ') ~ ' UTC') }} (Daily 12 AM sync)
+        </span>
+        <span class="text-[10px] text-[#9CA3AF]">
+          {{ comprehensive.calendar_metadata.total_cached_events if (comprehensive.calendar_metadata and comprehensive.calendar_metadata.total_cached_events) else 'Verified' }} India/MH events cached
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Row 3: Daily Forecast Details Table (Full Width) -->
+  <div class="bg-white rounded-xl border border-[#E5E7EB] shadow-xs overflow-hidden">
+    <div class="p-4 sm:p-5 border-b border-[#F3F4F6]">
+      <h3 class="text-sm sm:text-base font-bold text-[#111827]">Daily Forecast Details</h3>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-[#F9FAFB] text-[#4B5563] uppercase tracking-wider text-[11px] font-bold border-b border-[#E5E7EB]">
+          <tr>
+            <th class="py-3 px-4">Date</th>
+            <th class="py-3 px-4">Day</th>
+            <th class="py-3 px-4">Weather</th>
+            <th class="py-3 px-4">Event / Holiday</th>
+            <th class="py-3 px-4 text-center">Predicted Sales <span class="text-[10px] font-normal text-[#6B7280]">(units)</span></th>
+            <th class="py-3 px-4 text-center">Confidence Range</th>
+            <th class="py-3 px-4 text-right">Compared to Average</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#F3F4F6] text-[#1F2937]">
+          {% for row in comprehensive.daily_details %}
+          <tr class="hover:bg-[#F9FAFB] transition">
+            <td class="py-3 px-4 font-semibold text-[#111827] whitespace-nowrap">{{ row.date }}</td>
+            <td class="py-3 px-4 font-medium text-[#4B5563] whitespace-nowrap">{{ row.day }}</td>
+            <td class="py-3 px-4 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1.5">
+                <span class="text-sm">{{ row.weather_icon }}</span>
+                <span>{{ row.weather_condition }}, {{ row.weather_temp }}</span>
+              </span>
+            </td>
+            <td class="py-3 px-4 whitespace-nowrap font-medium text-[#4B5563]">
+              {% if row.event != '-' %}
+              <div class="inline-flex items-center gap-1.5 flex-wrap">
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold {% if row.event_type == 'weekend' %}bg-purple-50 text-purple-700 border border-purple-200{% elif row.event_type == 'festival' %}bg-amber-50 text-amber-800 border border-amber-200{% elif row.event_type == 'restricted_holiday' %}bg-orange-50 text-orange-700 border border-orange-200{% else %}bg-rose-50 text-rose-700 border border-rose-200{% endif %}">
+                  {{ row.event }}
+                </span>
+                {% if row.event_badge %}
+                <span class="text-[10px] text-[#6B7280] hidden sm:inline">· {{ row.event_badge }}</span>
+                {% endif %}
+                {% if row.lift_applied and row.lift_applied != '0%' %}
+                <span class="text-[10px] font-mono font-bold text-emerald-700">({{ row.lift_applied }} lift)</span>
+                {% endif %}
+              </div>
+              {% else %}
+              <span class="text-[#9CA3AF]">-</span>
+              {% endif %}
+            </td>
+            <td class="py-3 px-4 text-center font-extrabold text-sm text-[#111827]">{{ row.predicted_units }}</td>
+            <td class="py-3 px-4 text-center text-[#4B5563] font-medium">{{ row.confidence_range }}</td>
+            <td class="py-3 px-4 text-right font-bold {% if row.is_higher %}text-emerald-700{% else %}text-rose-600{% endif %}">
+              {{ row.diff_text }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Row 4: AI Explanation & Preparation Plan Callout Bar (Full Width) -->
+  <div class="bg-[#F0FDF4] border border-[#BBF7D0] rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-xs">
+    <div class="flex items-start gap-3.5 max-w-3xl">
+      <div class="w-9 h-9 rounded-xl bg-[#DCFCE7] text-[#16A34A] flex items-center justify-center flex-shrink-0 mt-0.5 shadow-2xs">
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
+      </div>
+      <div>
+        <h4 class="text-xs font-extrabold text-[#16A34A] uppercase tracking-wider flex items-center gap-1.5">
+          <span>AI Explanation</span>
+        </h4>
+        <p class="text-xs sm:text-sm text-[#14532D] leading-relaxed mt-1 font-medium">
+          {{ comprehensive.ai_explanation }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-start md:items-end flex-shrink-0">
+      <a href="/dashboard#prep-table" 
+         class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1B4332] text-white text-xs sm:text-sm font-semibold hover:bg-[#143326] shadow-sm transition">
+        <span>View Preparation Plan</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+      <span class="text-[11px] text-[#166534] mt-1.5">
+        See recommended quantities based on these forecasts and your current stock.
+      </span>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(function() {
+  function drawUniversalRoundedRect(c, x, y, width, height, radius) {
+    c.beginPath();
+    c.moveTo(x + radius, y);
+    c.lineTo(x + width - radius, y);
+    c.quadraticCurveTo(x + width, y, x + width, y + radius);
+    c.lineTo(x + width, y + height - radius);
+    c.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    c.lineTo(x + radius, y + height);
+    c.quadraticCurveTo(x, y + height, x, y + height - radius);
+    c.lineTo(x, y + radius);
+    c.quadraticCurveTo(x, y, x + radius, y);
+    c.closePath();
+  }
+
+  function initForecastChart() {
+    const canvas = document.getElementById('actualVsPredictedCanvas');
+    if (!canvas) {
+      console.warn('[ForecastChart] Canvas actualVsPredictedCanvas not found.');
+      return;
+    }
+
+    let chartData;
+    try {
+      chartData = {{ chart_json | safe }};
+    } catch (e) {
+      console.error('[ForecastChart] Failed to parse chart_json:', e);
+      return;
+    }
+
+    const labels = chartData.labels || [];
+    const actualSales = chartData.actual_sales || [];
+    const predictedSales = chartData.predicted_sales || [];
+    const lowerBounds = chartData.lower_bounds || [];
+    const upperBounds = chartData.upper_bounds || [];
+    const todayIdx = chartData.today_index !== undefined ? chartData.today_index : 8;
+
+    if (window._forecastChartInstance) {
+      window._forecastChartInstance.destroy();
+    }
+
+    const dividerPlugin = {
+      id: 'forecastDividerPlugin',
+      afterDraw(chart) {
+        try {
+          const meta = chart.getDatasetMeta(0);
+          if (!meta || !meta.data || !meta.data[todayIdx]) return;
+          const x = meta.data[todayIdx].x;
+          const top = chart.chartArea.top;
+          const bottom = chart.chartArea.bottom;
+          const c = chart.ctx;
+
+          c.save();
+          // Dashed vertical divider line
+          c.beginPath();
+          c.setLineDash([4, 4]);
+          c.strokeStyle = '#94A3B8';
+          c.lineWidth = 1.5;
+          c.moveTo(x, top + 26);
+          c.lineTo(x, bottom);
+          c.stroke();
+
+          // Pills at top of chart
+          // "← Historical" pill
+          const histText = '← Historical';
+          c.font = '600 11px Inter, system-ui, sans-serif';
+          const histWidth = c.measureText(histText).width + 16;
+          drawUniversalRoundedRect(c, x - histWidth - 6, top + 4, histWidth, 20, 4);
+          c.fillStyle = '#EFF6FF';
+          c.fill();
+          c.strokeStyle = '#BFDBFE';
+          c.lineWidth = 1;
+          c.stroke();
+          c.fillStyle = '#2563EB';
+          c.fillText(histText, x - histWidth + 2, top + 18);
+
+          // "Forecast →" pill
+          const foreText = 'Forecast →';
+          const foreWidth = c.measureText(foreText).width + 16;
+          drawUniversalRoundedRect(c, x + 6, top + 4, foreWidth, 20, 4);
+          c.fillStyle = '#F0FDF4';
+          c.fill();
+          c.strokeStyle = '#BBF7D0';
+          c.lineWidth = 1;
+          c.stroke();
+          c.fillStyle = '#16A34A';
+          c.fillText(foreText, x + 14, top + 18);
+
+          c.restore();
+        } catch (err) {
+          console.warn('[ForecastChart] Divider plugin error:', err);
+        }
+      }
+    };
+
+    try {
+      window._forecastChartInstance = new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Actual Sales (Past)',
+              data: actualSales,
+              borderColor: '#2563EB',
+              backgroundColor: '#2563EB',
+              pointBackgroundColor: '#2563EB',
+              pointBorderColor: '#FFFFFF',
+              pointBorderWidth: 2,
+              pointRadius: 4.5,
+              pointHoverRadius: 7,
+              borderWidth: 2.5,
+              tension: 0.25,
+              spanGaps: false,
+              order: 1,
+            },
+            {
+              label: 'Predicted Demand',
+              data: predictedSales,
+              borderColor: '#16A34A',
+              backgroundColor: '#16A34A',
+              pointBackgroundColor: '#16A34A',
+              pointBorderColor: '#FFFFFF',
+              pointBorderWidth: 2,
+              pointRadius: 4.5,
+              pointHoverRadius: 7,
+              borderWidth: 2.5,
+              tension: 0.25,
+              spanGaps: false,
+              order: 2,
+            },
+            {
+              label: 'Uncertainty Range (Upper)',
+              data: upperBounds,
+              borderColor: 'transparent',
+              backgroundColor: 'rgba(34, 197, 94, 0.14)',
+              pointRadius: 0,
+              fill: '+1',
+              tension: 0.25,
+              spanGaps: false,
+              order: 3,
+            },
+            {
+              label: 'Uncertainty Range (Lower)',
+              data: lowerBounds,
+              borderColor: 'transparent',
+              backgroundColor: 'transparent',
+              pointRadius: 0,
+              fill: false,
+              tension: 0.25,
+              spanGaps: false,
+              order: 4,
+            },
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 350
+          },
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: '#0F172A',
+              titleFont: { family: 'Inter', size: 12, weight: 'bold' },
+              bodyFont: { family: 'Inter', size: 12 },
+              padding: 10,
+              cornerRadius: 8,
+              filter: function(item) {
+                return item.raw !== null && item.datasetIndex < 2;
+              },
+              callbacks: {
+                label: function(context) {
+                  const val = context.raw;
+                  if (val === null || val === undefined) return null;
+                  return `${context.dataset.label}: ${val} units`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                font: { family: 'Inter', size: 10.5 },
+                color: '#64748B',
+                maxRotation: 0,
+                autoSkip: false,
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(226, 232, 240, 0.8)' },
+              ticks: {
+                font: { family: 'Inter', size: 11 },
+                color: '#64748B',
+                stepSize: 20
+              },
+              title: {
+                display: true,
+                text: 'Units Sold',
+                color: '#475569',
+                font: { family: 'Inter', size: 11, weight: '600' }
+              }
+            }
+          }
+        },
+        plugins: [dividerPlugin]
+      });
+      console.log('[ForecastChart] Rendered successfully.');
+    } catch (chartErr) {
+      console.error('[ForecastChart] Error initializing Chart.js instance:', chartErr);
+    }
+
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initForecastChart();
+      initMinuteWeatherTicker();
+    });
+  } else {
+    initForecastChart();
+    initMinuteWeatherTicker();
+  }
+
+  // Real-Time Minute-to-Minute Weather Telemetry Poller (Every 60 seconds)
+  function initMinuteWeatherTicker() {
+    const loc = "{{ shop_location }}";
+    function pollWeather() {
+      fetch('/api/v1/weather/live?location=' + encodeURIComponent(loc))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data.status === 'success' && data.weather) {
+            const w = data.weather;
+            const tempEl = document.getElementById('liveWeatherTemp');
+            const feelsEl = document.getElementById('liveFeelsLike');
+            const condEl = document.getElementById('liveWeatherCondition');
+            const humEl = document.getElementById('liveWeatherHumidity');
+            const precipEl = document.getElementById('liveWeatherPrecip');
+            const windEl = document.getElementById('liveWeatherWind');
+            const timeEl = document.getElementById('liveWeatherTime');
+            if (tempEl && w.temperature !== undefined) tempEl.textContent = w.temperature + '°C';
+            if (feelsEl && w.feels_like !== undefined) feelsEl.textContent = w.feels_like;
+            if (condEl && w.condition) condEl.textContent = w.condition;
+            if (humEl && w.humidity !== undefined) humEl.textContent = w.humidity + '%';
+            if (precipEl && w.precipitation_mm !== undefined) precipEl.textContent = w.precipitation_mm + 'mm';
+            if (windEl && w.wind_kmh !== undefined) windEl.textContent = w.wind_kmh + 'km/h';
+            if (timeEl && data.updated_at_display) timeEl.textContent = '⏱️ ' + data.updated_at_display;
+            console.debug('[Weather] Minute-to-minute live telemetry refreshed at ' + data.updated_at_display);
+          }
+        })
+        .catch(function(err) {
+          console.debug('[Weather] Minute poller heartbeat error:', err);
+        });
+    }
+    // Poll every 60 seconds (1 minute ticker)
+    setInterval(pollWeather, 60000);
+  }
+})();
+</script>
+{% endblock %}

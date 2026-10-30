@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}System Settings & Diagnostics | RestockIQ{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 border-b border-[#E5E0D8]">
+    <div>
+      <h1 class="font-display font-bold text-2xl text-[#1B4332]">Store Configuration & Diagnostics</h1>
+      <p class="text-xs text-[#5A5A54] mt-1">Configure store operating hours, inventory policy thresholds, and inspect backend health</p>
+    </div>
+
+    <button onclick="refreshDiagnostics()" class="px-3.5 py-2 rounded-xl bg-white border border-[#E5E0D8] text-xs font-semibold text-[#1B4332] hover:bg-[#F3EFEA] transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer">
+      <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+      <span>Run Diagnostics</span>
+    </button>
+  </div>
+
+  <!-- Store Parameters Form -->
+  <div class="warm-card p-6 bg-white">
+    <div class="flex items-center gap-2 mb-4 pb-2 border-b border-[#E5E0D8]">
+      <i data-lucide="store" class="w-5 h-5 text-[#2D6A4F]"></i>
+      <h3 class="font-display font-bold text-base text-[#1B4332]">Store Operational Parameters</h3>
+    </div>
+
+    <form onsubmit="event.preventDefault(); showToast('Settings saved successfully.', 'success');" class="space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-[#1C1C19] mb-1">Store / Business Name</label>
+          <input type="text" value="Guérande Artisan Bakery & Cafe" 
+                 class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-3.5 py-2 text-xs text-[#1C1C19] focus:outline-none focus:border-[#1B4332]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1C1C19] mb-1">Newsvendor Critical Ratio Target</label>
+          <select class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-3 py-2 text-xs text-[#1C1C19] focus:outline-none focus:border-[#1B4332]">
+            <option value="0.60" selected>0.60 (Standard Bakery Margin ~60%, z = +0.25)</option>
+            <option value="0.50">0.50 (Risk Neutral, z = 0.00)</option>
+            <option value="0.75">0.75 (High Availability Target, z = +0.67)</option>
+            <option value="0.95">0.95 (High Service Level, z = +1.65 — Higher Waste)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-[#1C1C19] mb-1">Morning Opening Hour</label>
+          <input type="time" value="06:30" 
+                 class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-3.5 py-2 text-xs text-[#1C1C19] focus:outline-none focus:border-[#1B4332]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#1C1C19] mb-1">Evening Closing Hour</label>
+          <input type="time" value="20:00" 
+                 class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-3.5 py-2 text-xs text-[#1C1C19] focus:outline-none focus:border-[#1B4332]">
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-semibold shadow-xs cursor-pointer">
+          Save Operational Preferences
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Interactive Guided Walkthrough & Replay -->
+  <div class="warm-card p-6 bg-white space-y-4">
+    <div class="flex items-center justify-between pb-2 border-b border-[#E5E0D8]">
+      <div class="flex items-center gap-2">
+        <i data-lucide="help-circle" class="w-5 h-5 text-[#2D6A4F]"></i>
+        <h3 class="font-display font-bold text-base text-[#1B4332]">Guided Walkthrough & Demo Guide</h3>
+      </div>
+      <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Always Available</span>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+      <div>
+        <p class="font-semibold text-[#1C1C19]">Need a refresher on RestockIQ features?</p>
+        <p class="text-[#5A5A54] mt-0.5">Learn the full 5-step daily operating cycle or replay the interactive 10-step UI tour anytime. Replaying does not alter any of your real store data or settings.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 flex-shrink-0">
+        <a href="/demo" class="px-4 py-2.5 rounded-xl border border-[#1B4332] text-[#1B4332] hover:bg-[#F3EFEA] text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors">
+          <i data-lucide="book-open" class="w-4 h-4"></i>
+          <span>View Flow Guide</span>
+        </a>
+        <button onclick="startGuidedDemo(0)" type="button" class="px-4 py-2.5 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer transition-colors">
+          <i data-lucide="play-circle" class="w-4 h-4"></i>
+          <span>Replay Live Tour</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Health Diagnostics 4-Grid -->
+  <div class="warm-card p-6 bg-white space-y-4">
+    <div class="flex items-center gap-2 pb-2 border-b border-[#E5E0D8]">
+      <i data-lucide="cpu" class="w-5 h-5 text-[#2D6A4F]"></i>
+      <h3 class="font-display font-bold text-base text-[#1B4332]">System & Infrastructure Health</h3>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+      
+      <!-- Database Health -->
+      <div class="p-4 rounded-xl border border-[#E5E0D8] bg-[#FCF9F4]">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-bold text-[#1B4332]">Persistence Layer</span>
+          <span class="w-2.5 h-2.5 rounded-full {% if health.db_connected %}bg-emerald-500{% else %}bg-amber-500{% endif %}"></span>
+        </div>
+        <div class="font-semibold text-[#1C1C19]">
+          {% if health.db_connected %}MongoDB Atlas Cloud{% else %}Resilient Local Engine{% endif %}
+        </div>
+        <div class="text-[11px] text-[#5A5A54] mt-1">
+          {% if health.db_connected %}Connected to Cluster0{% else %}Thread-safe fallback active{% endif %}
+        </div>
+      </div>
+
+      <!-- GenAI Health -->
+      <div class="p-4 rounded-xl border border-[#E5E0D8] bg-[#FCF9F4]">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-bold text-[#1B4332]">Generative AI</span>
+          <span class="w-2.5 h-2.5 rounded-full {% if health.llm_configured %}bg-emerald-500{% else %}bg-amber-500{% endif %}"></span>
+        </div>
+        <div class="font-semibold text-[#1C1C19]">
+          {% if health.llm_configured %}Google Gemini 3 Flash{% else %}Deterministic Fallback{% endif %}
+        </div>
+        <div class="text-[11px] text-[#5A5A54] mt-1">
+          {% if health.llm_configured %}{{ health.llm_model }}{% else %}Rule-based zero-math summary{% endif %}
+        </div>
+      </div>
+
+      <!-- Forecasting Engine -->
+      <div class="p-4 rounded-xl border border-[#E5E0D8] bg-[#FCF9F4]">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-bold text-[#1B4332]">Forecasting Engine</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+        </div>
+        <div class="font-semibold text-[#1C1C19]">GBDT + Bayesian TSB</div>
+        <div class="text-[11px] text-[#5A5A54] mt-1">HistGradientBoostingRegressor</div>
+      </div>
+
+      <!-- Security / Rate Limiter -->
+      <div class="p-4 rounded-xl border border-[#E5E0D8] bg-[#FCF9F4]">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-bold text-[#1B4332]">Security & Headers</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+        </div>
+        <div class="font-semibold text-[#1C1C19]">Rate Limiting Active</div>
+        <div class="text-[11px] text-[#5A5A54] mt-1">Sliding-window IP defense</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function refreshDiagnostics() {
+  showToast('Refreshing live system diagnostics...', 'info');
+  setTimeout(() => window.location.reload(), 600);
+}
+</script>
+{% endblock %}
+

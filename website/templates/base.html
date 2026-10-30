@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}RestockIQ | Demand Forecasting & Perishable Inventory Optimization{% endblock %}</title>
+
+  <!-- Google Fonts: Montserrat & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS via Official CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#1B4332',
+              sidebar: '#122A1F',
+              DEFAULT: '#2D6A4F',
+              accent: '#FFB702',
+              cream: '#FCF9F4',
+              surface: '#FFFFFF',
+              border: '#E5E0D8',
+              badge: '#F3EFEA',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js 4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Warm Tech Custom Styles -->
+  <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+
+<body class="min-h-screen text-[#1C1C19] bg-[#FAF8F5]">
+
+  {% if user %}
+  <!-- Authenticated Full-App Layout with Left Sidebar (From Screenshot) -->
+  <div class="min-h-screen flex">
+
+    <!-- Desktop Left Sidebar -->
+    <aside
+      class="relative hidden lg:flex w-64 text-white flex-col justify-between shrink-0 sticky top-0 h-screen overflow-y-auto border-r border-emerald-950/60 z-30 select-none bg-[#091710]">
+      
+      <!-- Whole Sidebar Blurred & Darkened Background Image Layer -->
+      <div class="absolute inset-0 bg-cover bg-center pointer-events-none"
+        style="background-image: url('/static/img/sidebar_showcase.jpg'); filter: blur(3px) brightness(0.35); transform: scale(1.08);">
+      </div>
+      <!-- Dark gradient overlay to guarantee text and icons are completely crisp and legible -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[#081810]/85 via-[#0A2216]/80 to-[#040C08]/92 pointer-events-none">
+      </div>
+
+      <!-- Top Branding & Navigation -->
+      <div class="relative z-10 p-5">
+        <!-- Logo (From Screenshot) -->
+        <a href="/dashboard" class="flex items-center gap-3 mb-8">
+          <span class="text-3xl">🥐</span>
+          <div>
+            <span class="font-display font-bold text-xl text-white tracking-tight block">RestockIQ</span>
+            <span class="text-[10px] text-emerald-300 font-semibold tracking-wider uppercase block -mt-1">Baking
+              Smarter • Wasting Less</span>
+          </div>
+        </a>
+
+        <!-- Vertical Nav Items -->
+        <nav class="space-y-1.5 text-sm font-medium">
+          <a href="/dashboard"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'dashboard' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="/inventory"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'inventory' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="package" class="w-4 h-4"></i>
+            <span>Products</span>
+          </a>
+          <a href="/forecast"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'forecast' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="trending-up" class="w-4 h-4"></i>
+            <span>Forecasts</span>
+          </a>
+          <a href="/waste-alerts"
+            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'waste_alerts' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <div class="flex items-center gap-3">
+              <i data-lucide="bell" class="w-4 h-4"></i>
+              <span>Waste Alerts</span>
+            </div>
+            {% if waste_count and waste_count > 0 %}
+            <span
+              class="w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center">{{
+              waste_count }}</span>
+            {% elif urgent_alert_count and urgent_alert_count > 0 %}
+            <span
+              class="w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center">{{
+              urgent_alert_count }}</span>
+            {% endif %}
+          </a>
+          <a href="/checkin"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'checkin' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+            <span>Check-In</span>
+          </a>
+          <a href="/import-sales"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'import' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+            <span>Import CSV</span>
+          </a>
+          <a href="/reports"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'reports' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+            <span>Reports</span>
+          </a>
+          <a href="/settings"
+            class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors {% if active_page == 'settings' %}bg-[#224C38]/90 text-white font-semibold shadow-xs border border-emerald-500/30 backdrop-blur-xs{% else %}text-emerald-100/75 hover:text-white hover:bg-white/10{% endif %}">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+            <span>Settings</span>
+          </a>
+          <button onclick="toggleAiDrawer()" type="button"
+            class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-white/10 transition-colors cursor-pointer text-left">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+            <span>AI Assistant</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Bottom Sidebar Quote & Status -->
+      <div class="relative z-10 p-5 pt-0">
+        <div class="text-[11px] font-semibold text-emerald-200/90 leading-tight space-y-0.5 pt-4 border-t border-white/15">
+          <p>Fresh Food</p>
+          <p>Happier Customers</p>
+          <p>Higher Profits</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Main Viewport Area -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Top Header Bar (From Screenshot) -->
+      <header
+        class="bg-white border-b border-[#EBE6DF] sticky top-0 z-20 shadow-xs px-4 sm:px-8 py-3.5 flex items-center justify-between">
+
+        <!-- Left: Store Selector Dropdown -->
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🏪</span>
+          <div class="flex items-center gap-1.5 font-display font-bold text-base text-[#1C1C19]">
+            <span>{{ (shop.name if shop is defined and shop else None) or (user.shop_name if user is defined and user
+              else None) or (user.store_name if user is defined and user else None) or 'Sunrise Bakery & Café' }}</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-[#5A5A54] cursor-pointer"></i>
+          </div>
+        </div>
+
+        <!-- Right: Real Live Date & Profile Avatar -->
+        <div class="flex items-center gap-3">
+
+          <!-- Live Date Box -->
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#EBE6DF] text-xs">
+            <i data-lucide="calendar" class="w-4 h-4 text-[#5A5A54]"></i>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:gap-1.5 leading-tight">
+              <span class="font-bold text-[#1C1C19]">Today</span>
+              <span class="text-[11px] text-[#5A5A54]">{{ weather.date_formatted if weather is defined and weather else
+                'Wed, 27 Nov 2024' }}</span>
+            </div>
+          </div>
+
+          <!-- User Profile Pill with Initials (From Screenshot) -->
+          <div class="flex items-center gap-2 pl-2 border-l border-[#EBE6DF]">
+            <div
+              class="w-8 h-8 rounded-full bg-[#EADBCA] text-[#5B3D1B] font-bold text-xs flex items-center justify-center">
+              {{ (user.name[0] if user and user.name else 'S') + (user.name[1] if user and user.name and
+              user.name|length > 1 else 'B') }}
+            </div>
+            <div class="hidden sm:flex items-center gap-1 text-xs font-semibold text-[#1C1C19]">
+              <span>{{ user.role|title if user and user.role else 'Store Owner' }}</span>
+              <a href="/logout" title="Log Out" class="ml-1 text-[#5A5A54] hover:text-red-700">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-[#1B4332] hover:bg-[#F3EFEA]">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-nav"
+        class="relative hidden lg:hidden border-b border-[#EBE6DF] text-white px-4 pt-3 pb-5 space-y-1 overflow-hidden bg-[#091710]">
+        <!-- Whole Sidebar Blurred & Darkened Background Image Layer -->
+        <div class="absolute inset-0 bg-cover bg-center pointer-events-none"
+          style="background-image: url('/static/img/sidebar_showcase.jpg'); filter: blur(3px) brightness(0.35); transform: scale(1.08);">
+        </div>
+        <div class="absolute inset-0 bg-[#081810]/85 pointer-events-none"></div>
+        <div class="relative z-10 space-y-1">
+          <a href="/dashboard"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'dashboard' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Dashboard</a>
+          <a href="/inventory"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'inventory' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Products</a>
+          <a href="/forecast"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'forecast' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Forecasts</a>
+          <a href="/waste-alerts"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'waste_alerts' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Waste
+            Alerts</a>
+          <a href="/checkin"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'checkin' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Check-In</a>
+          <a href="/import-sales"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'import' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Import
+            CSV</a>
+          <a href="/reports"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'reports' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Reports</a>
+          <a href="/settings"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {% if active_page == 'settings' %}bg-[#224C38]/90 text-white{% else %}text-emerald-100/75 hover:bg-white/10{% endif %}">Settings</a>
+        </div>
+      </div>
+
+      <!-- Page Content Container -->
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1400px] w-full mx-auto">
+        {% block content %}{% endblock %}
+      </main>
+
+      <!-- Clean Footer -->
+      <footer
+        class="bg-white border-t border-[#EBE6DF] py-5 px-6 sm:px-8 text-xs text-[#5A5A54] flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-[#1B4332]">RestockIQ</span>
+          <span>•</span>
+          <span>Demand Forecasting & Perishable Inventory Platform</span>
+        </div>
+        <div>
+          <span>Academic Session 2026–27 • SVKM's NMIMS MPSTME IT Dept</span>
+        </div>
+      </footer>
+
+    </div>
+
+  </div>
+
+  {% else %}
+
+  <!-- Unauthenticated Layout for Login & Registration (Clean Centered Gateway) -->
+  <div class="min-h-screen flex flex-col dotted-bg">
+    <header class="bg-white/95 backdrop-blur border-b border-[#E5E0D8] px-6 py-4 flex items-center justify-between">
+      <a href="/login" class="flex items-center gap-2.5">
+        <span class="text-2xl">🥐</span>
+        <div>
+          <span class="font-display font-bold text-lg text-[#1B4332] tracking-tight">RestockIQ</span>
+          <span class="text-[9px] text-[#5A5A54] uppercase tracking-wider font-semibold block -mt-1">Demand & Waste
+            Engine</span>
+        </div>
+      </a>
+      <div class="text-xs font-semibold text-[#1B4332]">
+        {% if active_page == 'login' %}
+        <a href="/register"
+          class="px-4 py-2 rounded-xl bg-[#1B4332] text-white hover:bg-[#2D6A4F] transition-colors shadow-xs">Create
+          Account</a>
+        {% else %}
+        <a href="/login"
+          class="px-4 py-2 rounded-xl bg-[#1B4332] text-white hover:bg-[#2D6A4F] transition-colors shadow-xs">Sign
+          In</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center p-4">
+      <div class="w-full">
+        {% block auth_box %}{% endblock %}
+      </div>
+    </main>
+  </div>
+
+  {% endif %}
+
+  <!-- Floating Toast Notifications -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
+
+  <!-- Floating Grounded AI Assistant Drawer -->
+  <aside id="ai-assistant-drawer"
+    class="fixed inset-y-0 right-0 z-40 w-full sm:w-96 bg-white shadow-2xl border-l border-[#E5E0D8] flex flex-col drawer-closed">
+    <!-- Header -->
+    <div class="px-5 py-4 border-b border-[#E5E0D8] flex items-center justify-between bg-[#FCF9F4]">
+      <div class="flex items-center gap-2">
+        <span class="p-1.5 rounded-lg bg-amber-100 text-amber-800">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+        </span>
+        <div>
+          <h3 class="font-display font-bold text-sm text-[#1B4332]">RestockIQ Assistant</h3>
+          <p class="text-[10px] text-[#5A5A54]">Grounded Store Inventory Intelligence</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="resetAssistantChat()" title="Start New Conversation"
+          class="p-1.5 rounded-lg text-[#5A5A54] hover:text-[#1B4332] hover:bg-[#EFEAE1] transition-colors"
+          aria-label="Reset Conversation">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleAiDrawer()"
+          class="p-1.5 rounded-lg text-[#5A5A54] hover:text-[#1B4332] hover:bg-[#EFEAE1] transition-colors"
+          aria-label="Close Assistant">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Suggested Question Chips -->
+    <div
+      class="px-4 py-2.5 bg-[#F9F7F2] border-b border-[#E5E0D8] flex gap-1.5 overflow-x-auto text-xs whitespace-nowrap">
+      <button onclick="sendAssistantQuery('What is the forecast for croissants?')"
+        class="px-2.5 py-1 rounded-full bg-white border border-[#E5E0D8] text-[#1B4332] hover:bg-[#1B4332] hover:text-white transition-colors">
+        Croissant Forecast
+      </button>
+      <button onclick="sendAssistantQuery('Are there any urgent waste alerts?')"
+        class="px-2.5 py-1 rounded-full bg-white border border-[#E5E0D8] text-[#1B4332] hover:bg-[#1B4332] hover:text-white transition-colors">
+        Active Alerts
+      </button>
+      <button onclick="sendAssistantQuery('Which items need restocking today?')"
+        class="px-2.5 py-1 rounded-full bg-white border border-[#E5E0D8] text-[#1B4332] hover:bg-[#1B4332] hover:text-white transition-colors">
+        Restock List
+      </button>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="assistant-chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3">
+      <div class="flex justify-start">
+        <div
+          class="bg-[#F3EFEA] border border-[#E5E0D8] text-[#1C1C19] px-4 py-3 rounded-2xl rounded-tl-none text-xs leading-relaxed max-w-[90%] shadow-xs">
+          Hello! I am your RestockIQ copilot. Ask me about today's forecast demand, active waste alerts, discount
+          actions, or closing stock requirements.
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Input Bar -->
+    <div class="p-3 border-t border-[#E5E0D8] bg-[#FCF9F4]">
+      <form onsubmit="event.preventDefault(); sendAssistantQuery();" class="flex items-center gap-2">
+        <input type="text" id="assistant-chat-input" placeholder="Ask about items, forecasts, alerts..."
+          class="flex-1 bg-white border border-[#E5E0D8] rounded-xl px-3.5 py-2 text-xs text-[#1C1C19] focus:outline-none focus:border-[#1B4332] shadow-xs">
+        <button type="submit"
+          class="p-2 rounded-xl bg-[#1B4332] text-white hover:bg-[#2D6A4F] transition-colors cursor-pointer">
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- Scripts -->
+  <script src="/static/js/main.js?v=2.3"></script>
+  <script src="/static/js/charts.js?v=2.2"></script>
+  <script>
+    window.AUTO_START_ONBOARDING = {{ 'true' if show_onboarding else 'false' }};
+    lucide.createIcons();
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-nav');
+      if (menu) menu.classList.toggle('hidden');
+    }
+  </script>
+  {% include "guided_demo.html" %}
+  {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

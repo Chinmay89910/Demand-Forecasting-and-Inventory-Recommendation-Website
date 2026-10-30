@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEDD5"/>
+      <stop offset="100%" stop-color="#FED7AA"/>
+    </linearGradient>
+    <linearGradient id="pastry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="50%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <linearGradient id="custard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#FACC15"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bg)"/>
+  <g transform="translate(10, 10)">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="85" rx="36" ry="7" fill="#78350F" opacity="0.15"/>
+    <!-- Outer Pastry Swirl -->
+    <circle cx="50" cy="50" r="38" fill="url(#pastry)"/>
+    <circle cx="50" cy="50" r="32" fill="#FBBF24"/>
+    <circle cx="50" cy="50" r="26" fill="url(#pastry)"/>
+    <circle cx="50" cy="50" r="20" fill="url(#custard)"/>
+    <!-- Almond Flakes -->
+    <ellipse cx="38" cy="40" rx="6" ry="2.5" transform="rotate(35 38 40)" fill="#FFFBEB" stroke="#D97706" stroke-width="0.8"/>
+    <ellipse cx="62" cy="38" rx="6" ry="2.5" transform="rotate(-30 62 38)" fill="#FFFBEB" stroke="#D97706" stroke-width="0.8"/>
+    <ellipse cx="40" cy="62" rx="6" ry="2.5" transform="rotate(-45 40 62)" fill="#FFFBEB" stroke="#D97706" stroke-width="0.8"/>
+    <ellipse cx="60" cy="62" rx="6" ry="2.5" transform="rotate(40 60 62)" fill="#FFFBEB" stroke="#D97706" stroke-width="0.8"/>
+    <!-- Icing Drizzle Lines -->
+    <path d="M 24,42 Q 50,52 76,40" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+    <path d="M 28,58 Q 50,48 72,60" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.9"/>
+  </g>
+</svg>

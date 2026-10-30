@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF4FF"/>
+      <stop offset="100%" stop-color="#FAE8FF"/>
+    </linearGradient>
+    <linearGradient id="cashew" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="60%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="silverFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#E2E8F0"/>
+      <stop offset="70%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bg)"/>
+  <g transform="translate(10, 10)">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="85" rx="36" ry="7" fill="#701A75" opacity="0.12"/>
+    <!-- Diamond 1 (Behind) -->
+    <polygon points="34,36 60,18 78,42 52,60" fill="url(#cashew)" stroke="#D97706" stroke-width="1"/>
+    <!-- Diamond 2 (Main Foreground Diamond) -->
+    <polygon points="26,62 54,40 76,68 48,90" fill="url(#cashew)" stroke="#D97706" stroke-width="1.2" filter="drop-shadow(0px 3px 4px rgba(0,0,0,0.15))"/>
+    <!-- Silver Vark (Edible Silver Foil) on main piece -->
+    <polygon points="32,60 52,44 68,66 48,82" fill="url(#silverFoil)" opacity="0.85"/>
+    <!-- Silver Foil Crinkle Specks -->
+    <polygon points="40,52 48,46 54,54 46,60" fill="#FFFFFF" opacity="0.9"/>
+    <polygon points="56,58 64,52 68,62 60,68" fill="#FFFFFF" opacity="0.9"/>
+    <polygon points="36,66 44,60 48,70 40,76" fill="#FFFFFF" opacity="0.9"/>
+    <!-- Sparkle star -->
+    <path d="M 52,42 Q 54,48 60,50 Q 54,52 52,58 Q 50,52 44,50 Q 50,48 52,42 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

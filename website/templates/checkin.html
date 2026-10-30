@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}End-of-Day Inventory Check-In | RestockIQ{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 border-b border-[#E5E0D8]">
+    <div>
+      <div class="flex items-center gap-2">
+        <h1 class="font-display font-bold text-2xl text-[#1B4332]">End-of-Day Physical Check-In</h1>
+        <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold border border-emerald-200">
+          Shift Audit
+        </span>
+      </div>
+      <p class="text-xs text-[#5A5A54] mt-1">Audit physical stock remaining on shelves. Perishable food locks automatically to 0 for tomorrow morning's fresh bake.</p>
+    </div>
+
+    <button onclick="submitBulkCheckIn()" class="px-4 py-2 rounded-xl bg-[#1B4332] text-white text-xs font-semibold hover:bg-[#2D6A4F] transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer">
+      <i data-lucide="check" class="w-4 h-4"></i>
+      <span>Confirm Closing Stock</span>
+    </button>
+  </div>
+
+  <!-- Operational Rule Card -->
+  <div class="warm-card p-4 bg-[#FCF9F4] border-l-4 border-l-[#1B4332] text-xs text-[#1C1C19] flex items-start gap-3 rounded-2xl border border-[#EBE6DF]">
+    <i data-lucide="info" class="w-5 h-5 text-[#2D6A4F] flex-shrink-0 mt-0.5"></i>
+    <div class="space-y-1">
+      <div class="font-bold text-xs sm:text-sm text-[#1C1C19]">Daily Closing Stock Rule:</div>
+      <div class="text-xs text-[#5A5A54] leading-relaxed">
+        • <strong class="text-[#1C1C19]">Fresh Items (1-Day Shelf Life):</strong> Any unsold stock at closing is automatically recorded as daily waste and reset to <strong class="text-[#1C1C19]">0 units</strong> so tomorrow starts fresh.<br>
+        • <strong class="text-[#1C1C19]">Non-Perishable & Multi-Day Items:</strong> Leftover stock carries forward directly into tomorrow's inventory based on your physical shelf count.
+      </div>
+    </div>
+  </div>
+
+  <!-- Check-In Table -->
+  <div class="warm-card overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse text-xs sm:text-sm">
+        <thead>
+          <tr class="border-b border-[#E5E0D8] bg-[#F9F7F2] text-[#5A5A54] uppercase tracking-wider text-[11px] font-bold">
+            <th class="py-3 px-4 sm:px-6">Product Name</th>
+            <th class="py-3 px-4">Type</th>
+            <th class="py-3 px-4 text-center">System Book Stock</th>
+            <th class="py-3 px-4 text-center">Physical Shelf Count</th>
+            <th class="py-3 px-4 text-center">Audit Variance</th>
+            <th class="py-3 px-4 sm:px-6 text-center">Next Day Opening Lock</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#E5E0D8] bg-white">
+          {% for it in items %}
+          <tr class="checkin-row hover:bg-[#FCF9F4] transition-colors" data-id="{{ it.id }}" data-perishable="{{ 'true' if (it.shelf_life_days == 1 or (it.isPerishable and it.shelf_life_days in [1, None])) else 'false' }}">
+            
+            <td class="py-3.5 px-4 sm:px-6 font-semibold text-[#1B4332]">
+              {{ it.name }}
+            </td>
+
+            <td class="py-3.5 px-4">
+              {% if it.shelf_life_days == 1 or (it.isPerishable and it.shelf_life_days in [1, None]) %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">
+                Fresh (1-Day)
+              </span>
+              {% elif it.isPerishable %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+                Multi-Day ({{ it.shelf_life_days }}d)
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#F3EFEA] text-[#5A5A54]">
+                Non-Perishable
+              </span>
+              {% endif %}
+            </td>
+
+            <td class="py-3.5 px-4 text-center font-mono font-medium text-[#5A5A54]">
+              <span id="book-stock-{{ it.id }}">{{ it.currentStock }}</span> {{ it.unit or 'Units' }}
+            </td>
+
+            <!-- Stepper Controls -->
+            <td class="py-3.5 px-4 text-center">
+              <div class="inline-flex items-center gap-2 bg-[#F8F6F0] p-1 rounded-xl border border-[#E5E0D8]">
+                <button type="button" onclick="adjustCount('{{ it.id }}', -1)" class="w-7 h-7 rounded-lg bg-white border border-[#E5E0D8] text-[#1B4332] font-bold hover:bg-[#EFEAE1] transition-colors cursor-pointer">
+                  -
+                </button>
+                <input type="number" id="physical-input-{{ it.id }}" value="{{ it.currentStock }}" min="0" oninput="updateVariance('{{ it.id }}')"
+                       class="w-16 text-center bg-transparent font-mono font-bold text-sm text-[#1C1C19] focus:outline-none">
+                <button type="button" onclick="adjustCount('{{ it.id }}', 1)" class="w-7 h-7 rounded-lg bg-white border border-[#E5E0D8] text-[#1B4332] font-bold hover:bg-[#EFEAE1] transition-colors cursor-pointer">
+                  +
+                </button>
+              </div>
+            </td>
+
+            <!-- Variance -->
+            <td class="py-3.5 px-4 text-center font-mono font-bold">
+              <span id="variance-{{ it.id }}" class="text-[#5A5A54]">0</span>
+            </td>
+
+            <!-- EOD Reset Lock -->
+            <td class="py-3.5 px-4 sm:px-6 text-center">
+              {% if it.shelf_life_days == 1 or (it.isPerishable and it.shelf_life_days in [1, None]) %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                <i data-lucide="lock" class="w-3 h-3 text-amber-600"></i>
+                <span>Auto-Resets to 0</span>
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <i data-lucide="arrow-right" class="w-3 h-3 text-emerald-600"></i>
+                <span>Carries Forward</span>
+              </span>
+              {% endif %}
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function adjustCount(itemId, delta) {
+  const input = document.getElementById(`physical-input-${itemId}`);
+  if (!input) return;
+  let val = parseInt(input.value) || 0;
+  val = Math.max(0, val + delta);
+  input.value = val;
+  updateVariance(itemId);
+}
+
+function updateVariance(itemId) {
+  const input = document.getElementById(`physical-input-${itemId}`);
+  const bookSpan = document.getElementById(`book-stock-${itemId}`);
+  const varSpan = document.getElementById(`variance-${itemId}`);
+  if (!input || !bookSpan || !varSpan) return;
+
+  const physical = parseInt(input.value) || 0;
+  const book = parseInt(bookSpan.innerText) || 0;
+  const diff = physical - book;
+
+  if (diff > 0) {
+    varSpan.innerText = `+${diff}`;
+    varSpan.className = 'text-emerald-700 font-bold font-mono';
+  } else if (diff < 0) {
+    varSpan.innerText = `${diff}`;
+    varSpan.className = 'text-red-700 font-bold font-mono';
+  } else {
+    varSpan.innerText = '0';
+    varSpan.className = 'text-[#5A5A54] font-medium font-mono';
+  }
+}
+
+async function submitBulkCheckIn() {
+  const rows = document.querySelectorAll('.checkin-row');
+  const entries = [];
+
+  rows.forEach(r => {
+    const id = r.getAttribute('data-id');
+    const isPerishable = r.getAttribute('data-perishable') === 'true';
+    const input = document.getElementById(`physical-input-${id}`);
+    const physicalCount = parseInt(input?.value) || 0;
+    entries.push({
+      item_id: id,
+      physical_count: physicalCount,
+      is_perishable: isPerishable,
+      target_opening_stock: isPerishable ? 0 : physicalCount,
+    });
+  });
+
+  try {
+    const res = await fetch('/api/v1/items/bulk-checkin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ entries: entries }),
+    });
+
+    if (res.ok) {
+      showToast('Shift audit completed. Perishables locked to 0 for fresh bake.', 'success');
+      setTimeout(() => window.location.href = '/dashboard', 1200);
+    } else {
+      showToast('Error recording closing stock', 'error');
+    }
+  } catch (e) {
+    showToast('Network error during check-in', 'error');
+  }
+}
+</script>
+{% endblock %}
+

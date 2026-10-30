@@ -1,0 +1,228 @@
+<!-- Interactive Guided Onboarding Demo Modal -->
+<div id="guided-demo-overlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+  <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl border border-[#E5E0D8] overflow-hidden flex flex-col transform transition-all duration-300">
+    
+    <!-- Top Progress Bar -->
+    <div class="w-full bg-[#E5E0D8] h-1.5">
+      <div id="demo-progress-bar" class="bg-[#1B4332] h-1.5 transition-all duration-300" style="width: 10%;"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="px-6 pt-5 pb-3 flex items-center justify-between border-b border-[#E5E0D8]/60 bg-[#FCF9F4]">
+      <div class="flex items-center gap-2.5">
+        <span id="demo-step-icon" class="p-2 rounded-2xl bg-amber-100 text-amber-800 text-lg">🥐</span>
+        <div>
+          <span id="demo-step-indicator" class="text-[10px] font-bold uppercase tracking-wider text-[#5A5A54]">Step 1 of 10 • Welcome</span>
+          <h3 id="demo-step-title" class="font-display font-bold text-lg text-[#1B4332]">Welcome to RestockIQ</h3>
+        </div>
+      </div>
+      <button onclick="exitGuidedDemo()" class="p-1.5 rounded-xl text-[#5A5A54] hover:text-[#1C1C19] hover:bg-[#E5E0D8]/50 transition-colors" title="Close Walkthrough">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="p-6 sm:p-7 space-y-4 text-xs sm:text-sm text-[#1C1C19] leading-relaxed min-h-[180px] flex flex-col justify-center">
+      <p id="demo-step-text" class="text-[#3A3A34] text-sm">
+        Welcome to your intelligent demand forecasting and inventory operating system. RestockIQ helps small food businesses like bakeries, cafés, and delis balance fresh food availability against daily waste write-offs.
+      </p>
+
+      <div id="demo-step-highlight" class="p-3.5 rounded-2xl bg-[#F9F7F2] border border-[#E5E0D8] flex items-start gap-3 text-xs text-[#5A5A54]">
+        <i data-lucide="info" class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5"></i>
+        <span id="demo-step-tip">This 60-second interactive tour shows you how to manage products, generate forecasts, and eliminate spoilage.</span>
+      </div>
+    </div>
+
+    <!-- Footer Controls -->
+    <div class="px-6 py-4 bg-[#FCF9F4] border-t border-[#E5E0D8] flex items-center justify-between gap-3">
+      <button onclick="skipGuidedDemo()" class="text-xs font-semibold text-[#5A5A54] hover:text-[#1C1C19] px-2 py-1.5 rounded-lg hover:bg-black/5 transition-colors">
+        Skip Tour
+      </button>
+
+      <div class="flex items-center gap-2">
+        <button id="demo-prev-btn" onclick="prevDemoStep()" class="px-4 py-2 rounded-xl border border-[#E5E0D8] bg-white text-xs font-semibold text-[#1C1C19] hover:bg-[#F3EFEA] transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+          Previous
+        </button>
+        <button id="demo-next-btn" onclick="nextDemoStep()" class="px-5 py-2 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5">
+          <span>Next</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const DEMO_STEPS = [
+  {
+    icon: "🥐",
+    title: "Welcome to Your Personal Shop",
+    indicator: "Step 1 of 10 • Getting Started",
+    text: "Welcome to RestockIQ! This platform turns daily inventory decisions from intuition into a precise science. It uses machine learning to predict demand and Newsvendor mathematics to tell you exactly how much to bake or order each day.",
+    tip: "You are currently signed into your private shop profile. All products, sales, and forecasts you see are securely isolated to your shop.",
+    route: "/dashboard"
+  },
+  {
+    icon: "📊",
+    title: "Executive Shop Dashboard",
+    indicator: "Step 2 of 10 • Morning Briefing",
+    text: "Your dashboard is your daily morning operating center. It summarizes total tracked items, highlights products at risk of stockout or spoilage, and provides an AI-powered morning operational briefing.",
+    tip: "The Priority Restock table lists the exact units you need to produce today to maximize profit while minimizing evening waste.",
+    route: "/dashboard"
+  },
+  {
+    icon: "📦",
+    title: "Products & Inventory (/inventory)",
+    indicator: "Step 3 of 10 • Catalog Management",
+    text: "The Products page is where you manage your menu. You can add items, assign them to categories (Pastry, Bread, Dairy, Beverage), set unit selling and cost prices, and track current on-hand quantities.",
+    tip: "Mark short-life items as 'Perishable' (1-day shelf life) so our algorithm knows they cannot be stored overnight.",
+    route: "/inventory"
+  },
+  {
+    icon: "📥",
+    title: "Historical Sales CSV Import (/import-sales)",
+    indicator: "Step 4 of 10 • Data Ingestion",
+    text: "Have historical sales data? You can upload your sales logs via our drag-and-drop CSV importer. The system automatically normalizes column aliases and checks date formats and positive quantities.",
+    tip: "Even if you don't upload sales data immediately, new items automatically use Bayesian category priors so you get accurate forecasts on day one.",
+    route: "/import-sales"
+  },
+  {
+    icon: "📈",
+    title: "7-Day Demand Forecasting (/forecast)",
+    indicator: "Step 5 of 10 • Machine Learning",
+    text: "Under the Forecasts tab, you can view interactive 7-day predicted demand curves with 90% confidence bands for any SKU, alongside recent actual historical sales volume.",
+    tip: "Our Autoregressive Gradient-Boosted Trees (GBDT) engine detects weekly seasonalities (e.g. Saturday croissant spikes) automatically.",
+    route: "/forecast"
+  },
+  {
+    icon: "⚖️",
+    title: "Newsvendor Restocking Math",
+    indicator: "Step 6 of 10 • Optimal Economics",
+    text: "Traditional restocking assumes over-baking and under-baking carry equal penalties. RestockIQ calculates the exact Newsvendor Critical Ratio: CR = Cu / (Cu + Co) = (Price - Cost) / Price.",
+    tip: "For a typical 60% gross margin bakery item, the optimal safety multiplier is z = +0.2533, perfectly balancing availability against spoilage.",
+    route: "/forecast"
+  },
+  {
+    icon: "⚠️",
+    title: "Intraday Waste Action Engine (/waste-alerts)",
+    indicator: "Step 7 of 10 • Afternoon Spoilage",
+    text: "Forecasts protect tomorrow's inventory, but the Waste Action Engine protects what was already baked today! Between 2:00 PM and 4:00 PM, it tracks your hourly sales pace against expected velocity.",
+    tip: "If velocity drops below 60% of target pace, you can fire a 20% promotional discount or flag remaining units for local charity pickup in one click.",
+    route: "/waste-alerts"
+  },
+  {
+    icon: "📋",
+    title: "Evening Stock Check-In (/checkin)",
+    indicator: "Step 8 of 10 • End-of-Day Audit",
+    text: "At close of business, store staff use touch-friendly '+' and '-' steppers to record remaining unsold physical stock. Click 'Reset Perishables to 0' to write off daily expired goods and prepare for tomorrow.",
+    tip: "Daily check-ins calibrate tomorrow's starting stock level and continually train the machine learning forecast accuracy.",
+    route: "/checkin"
+  },
+  {
+    icon: "📑",
+    title: "Simulation Reports & Exports (/reports)",
+    indicator: "Step 9 of 10 • Financial Benchmarks",
+    text: "The Reports page benchmarks RestockIQ against naive fixed-batch ordering, proving how much food waste and lost revenue you prevented. You can also download real-time CSV and JSON backups.",
+    tip: "Export your inventory schedule, 7-day forecasts, or full system state anytime with one click.",
+    route: "/reports"
+  },
+  {
+    icon: "🎉",
+    title: "You're All Set! Replay Anytime",
+    indicator: "Step 10 of 10 • Ready to Optimize",
+    text: "Congratulations! You are now ready to take control of your bakery's inventory and food waste. If you ever want to review this tour, open Settings and click 'Replay Guided Demo' anytime.",
+    tip: "Click 'Get Started' below to explore your personal store dashboard!",
+    route: "/dashboard"
+  }
+];
+
+let currentDemoStep = 0;
+
+function renderDemoStep(stepIndex) {
+  if (stepIndex < 0) stepIndex = 0;
+  if (stepIndex >= DEMO_STEPS.length) stepIndex = DEMO_STEPS.length - 1;
+  currentDemoStep = stepIndex;
+
+  const step = DEMO_STEPS[stepIndex];
+  document.getElementById("demo-step-icon").textContent = step.icon;
+  document.getElementById("demo-step-indicator").textContent = step.indicator;
+  document.getElementById("demo-step-title").textContent = step.title;
+  document.getElementById("demo-step-text").textContent = step.text;
+  document.getElementById("demo-step-tip").textContent = step.tip;
+
+  const pct = Math.round(((stepIndex + 1) / DEMO_STEPS.length) * 100);
+  document.getElementById("demo-progress-bar").style.width = `${pct}%`;
+
+  const prevBtn = document.getElementById("demo-prev-btn");
+  const nextBtn = document.getElementById("demo-next-btn");
+
+  prevBtn.disabled = (stepIndex === 0);
+
+  if (stepIndex === DEMO_STEPS.length - 1) {
+    nextBtn.innerHTML = `<span>Get Started</span><i data-lucide="check" class="w-3.5 h-3.5"></i>`;
+    nextBtn.className = "px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer";
+  } else {
+    nextBtn.innerHTML = `<span>Next</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>`;
+    nextBtn.className = "px-5 py-2 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-semibold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer";
+  }
+  if (window.lucide) { lucide.createIcons(); }
+}
+
+function startGuidedDemo(step = 0) {
+  const overlay = document.getElementById("guided-demo-overlay");
+  if (!overlay) return;
+  renderDemoStep(step);
+  overlay.classList.remove("hidden");
+}
+
+function exitGuidedDemo() {
+  const overlay = document.getElementById("guided-demo-overlay");
+  if (overlay) overlay.classList.add("hidden");
+}
+
+async function skipGuidedDemo() {
+  exitGuidedDemo();
+  await persistOnboardingComplete();
+}
+
+async function nextDemoStep() {
+  if (currentDemoStep < DEMO_STEPS.length - 1) {
+    renderDemoStep(currentDemoStep + 1);
+  } else {
+    // Finished final step
+    exitGuidedDemo();
+    await persistOnboardingComplete();
+    showToast("Welcome to RestockIQ! Tour completed.", "success");
+  }
+}
+
+function prevDemoStep() {
+  if (currentDemoStep > 0) {
+    renderDemoStep(currentDemoStep - 1);
+  }
+}
+
+async function persistOnboardingComplete() {
+  try {
+    await fetch("/api/v1/user/onboarding", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: true })
+    });
+  } catch (err) {
+    console.error("Could not persist onboarding state:", err);
+  }
+}
+
+// Auto-trigger on first login if show_onboarding is true or query param ?demo=1 is present
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("demo") === "1" || window.AUTO_START_ONBOARDING === true) {
+    setTimeout(() => {
+      startGuidedDemo(0);
+    }, 400);
+  }
+});
+</script>
+

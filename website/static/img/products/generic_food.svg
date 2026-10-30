@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="food" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bg)"/>
+  <g transform="translate(10, 10)">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="85" rx="36" ry="7" fill="#78350F" opacity="0.15"/>
+    <!-- Cloche / Dome cover -->
+    <path d="M 22,72 C 22,46 34,34 50,34 C 66,34 78,46 78,72 Z" fill="url(#food)"/>
+    <circle cx="50" cy="28" r="6" fill="#D97706"/>
+    <!-- Plate tray -->
+    <rect x="14" y="72" width="72" height="8" rx="4" fill="#92400E"/>
+    <!-- Sparkles -->
+    <path d="M 32,46 Q 34,50 38,52 Q 34,54 32,58 Q 30,54 26,52 Q 30,50 32,46 Z" fill="#FFFBEB"/>
+    <path d="M 68,48 Q 70,52 74,54 Q 70,56 68,60 Q 66,56 62,54 Q 66,52 68,48 Z" fill="#FFFBEB"/>
+  </g>
+</svg>

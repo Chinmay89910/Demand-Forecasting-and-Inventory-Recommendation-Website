@@ -1,0 +1,94 @@
+/* RestockIQ "Warm Tech" Design System Custom Styles */
+
+:root {
+  --color-canvas: #FCF9F4;
+  --color-surface: #FFFFFF;
+  --color-primary: #1B4332;
+  --color-primary-light: #2D6A4F;
+  --color-accent: #FFB702;
+  --color-text-dark: #1C1C19;
+  --color-text-muted: #5A5A54;
+  --color-border: #E5E0D8;
+  --color-card-border: #EFEAE1;
+  --color-alert-red: #B91C1C;
+  --color-alert-bg: #FEF2F2;
+  --color-badge-bg: #F3EFEA;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-text-dark);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-font {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Subtle Warm Dotted Pattern Background */
+.dotted-bg {
+  background-image: radial-gradient(#D6CFC4 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+/* Warm Card Containers */
+.warm-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 16px rgba(27, 67, 50, 0.03);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.warm-card:hover {
+  box-shadow: 0 6px 24px rgba(27, 67, 50, 0.06);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D2C6;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8B0A2;
+}
+
+/* Live Status Pulse Animation */
+.status-pulse {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+}
+
+/* Floating AI Assistant Drawer */
+#ai-assistant-drawer {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+#ai-assistant-drawer.drawer-closed {
+  transform: translateX(110%);
+  opacity: 0;
+  pointer-events: none;
+}
+#ai-assistant-drawer.drawer-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+

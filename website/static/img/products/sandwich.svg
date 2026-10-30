@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bgSand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="breadSlice" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="lettuce" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ADE80"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bgSand)"/>
+  <g transform="translate(10, 10)">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="85" rx="36" ry="7" fill="#78350F" opacity="0.15"/>
+    <!-- Bottom toast triangle -->
+    <polygon points="16,74 84,46 48,84" fill="url(#breadSlice)"/>
+    <!-- Cucumber / Veggie slice layer -->
+    <polygon points="18,70 82,44 48,80" fill="#84CC16"/>
+    <!-- Tomato layer -->
+    <polygon points="20,66 80,42 48,76" fill="#EF4444"/>
+    <!-- Cheese layer with melt overhang -->
+    <polygon points="22,62 78,40 48,72" fill="#FACC15"/>
+    <path d="M 36,68 Q 38,76 42,74" fill="#FACC15"/>
+    <!-- Lettuce frill layer -->
+    <path d="M 22,58 Q 28,62 36,56 Q 44,64 54,54 Q 66,60 76,38" stroke="url(#lettuce)" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <!-- Top toast triangle -->
+    <polygon points="20,54 84,32 50,66" fill="url(#breadSlice)"/>
+    <!-- Bread grill marks -->
+    <line x1="34" y1="52" x2="48" y2="46" stroke="#92400E" stroke-width="2" stroke-linecap="round"/>
+    <line x1="44" y1="56" x2="58" y2="50" stroke="#92400E" stroke-width="2" stroke-linecap="round"/>
+    <line x1="54" y1="60" x2="68" y2="54" stroke="#92400E" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

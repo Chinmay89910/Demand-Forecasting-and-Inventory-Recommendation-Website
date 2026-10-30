@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}How RestockIQ Works | Guided Demo & Flow Guide{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-8 py-4">
+
+  <!-- Hero Header Banner -->
+  <div class="warm-card p-6 sm:p-8 bg-gradient-to-r from-emerald-950 via-[#1B4332] to-[#2D6A4F] text-white relative overflow-hidden shadow-lg">
+    <div class="relative z-10 max-w-2xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold mb-3">
+        <span>🥐</span>
+        <span>Welcome to Your Personal Shop</span>
+      </div>
+      <h1 class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight">
+        How RestockIQ Works for {{ shop.name or "Your Shop" }}
+      </h1>
+      <p class="text-emerald-100/90 text-sm mt-2 leading-relaxed">
+        Understand the complete daily flow of your AI-powered demand forecasting and perishable inventory system — from morning baking recommendations to evening waste mitigation.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button onclick="finishDemoAndGoDashboard()" 
+                class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-900 font-bold text-sm transition-all shadow-md flex items-center gap-2 cursor-pointer">
+          <span>Enter My Personal Dashboard</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+        <a href="/dashboard?demo=1" 
+           class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors border border-white/20 flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+          <span>Launch Interactive UI Tour</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Decorative background icon -->
+    <div class="absolute -right-8 -bottom-10 text-[180px] opacity-10 select-none pointer-events-none">
+      🥐
+    </div>
+  </div>
+
+  <!-- Operational Flow: 5 Daily Phases -->
+  <div class="space-y-6">
+    <div class="text-center max-w-xl mx-auto">
+      <h2 class="font-display font-bold text-xl text-[#1B4332]">The 5-Step Daily Operating Flow</h2>
+      <p class="text-xs text-[#5A5A54] mt-1">Here is how RestockIQ optimizes food retailer operations every single day</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Step 1: Morning Forecast -->
+      <div class="warm-card p-6 border-l-4 border-l-emerald-600 hover:shadow-md transition-shadow">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-sm flex items-center justify-center">1</span>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">6:00 AM • Morning Prep</span>
+              <h3 class="font-display font-bold text-base text-[#1C1C19]">AI Demand Forecast & Newsvendor Buffer</h3>
+            </div>
+          </div>
+          <span class="p-2 rounded-lg bg-[#F3EFEA] text-lg">🌅</span>
+        </div>
+        <p class="text-xs text-[#5A5A54] leading-relaxed mb-4">
+          Before morning baking begins, the Autoregressive Gradient-Boosted Trees (GBDT) model predicts today's demand based on day-of-week, weather conditions, and sales velocity.
+        </p>
+        <div class="p-3 rounded-xl bg-[#F9F7F2] border border-[#E5E0D8] text-xs space-y-1.5">
+          <div class="flex justify-between text-[11px] font-semibold text-[#1B4332]">
+            <span>Optimal Order Target (Q*)</span>
+            <span>Q* = Expected Demand + (z × σ)</span>
+          </div>
+          <p class="text-[11px] text-[#5A5A54]">
+            Using Newsvendor Critical Ratio ($CR = 0.60 \implies z = +0.2533$), the system calculates the ideal safety stock buffer so you never over-bake or run out during the 8:00 AM rush.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 2: Product & Stock Management -->
+      <div class="warm-card p-6 border-l-4 border-l-amber-600 hover:shadow-md transition-shadow">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 font-bold text-sm flex items-center justify-center">2</span>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700">10:00 AM • Shelf Tracking</span>
+              <h3 class="font-display font-bold text-base text-[#1C1C19]">Your Products & Perishable Classification</h3>
+            </div>
+          </div>
+          <span class="p-2 rounded-lg bg-[#F3EFEA] text-lg">🥐</span>
+        </div>
+        <p class="text-xs text-[#5A5A54] leading-relaxed mb-4">
+          Add your shop's items into the Products catalog. Define selling price, unit cost, and tag whether items are perishable (like fresh croissants) or non-perishable (like packaged coffee beans).
+        </p>
+        <div class="p-3 rounded-xl bg-[#F9F7F2] border border-[#E5E0D8] text-xs space-y-1.5">
+          <div class="flex justify-between text-[11px] font-semibold text-[#1B4332]">
+            <span>Perishability Safeguard</span>
+            <span class="text-amber-800">18–24 Hour Shelf Life</span>
+          </div>
+          <p class="text-[11px] text-[#5A5A54]">
+            Perishable items cannot be sold the next morning. RestockIQ prioritizes these items in restock calculations to prevent full inventory write-offs.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 3: Intraday Waste Mitigation -->
+      <div class="warm-card p-6 border-l-4 border-l-red-600 hover:shadow-md transition-shadow">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-red-100 text-red-800 font-bold text-sm flex items-center justify-center">3</span>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-red-700">2:00 PM • Afternoon Action</span>
+              <h3 class="font-display font-bold text-base text-[#1C1C19]">Real-Time Waste Alerts & 20% Markdown</h3>
+            </div>
+          </div>
+          <span class="p-2 rounded-lg bg-[#F3EFEA] text-lg">⚡</span>
+        </div>
+        <p class="text-xs text-[#5A5A54] leading-relaxed mb-4">
+          At mid-afternoon, if customer sales velocity is slower than expected (&lt; 60% pace ratio), an urgent Waste Alert fires directly on your dashboard.
+        </p>
+        <div class="p-3 rounded-xl bg-[#F9F7F2] border border-[#E5E0D8] text-xs space-y-1.5">
+          <div class="flex justify-between text-[11px] font-semibold text-[#1B4332]">
+            <span>One-Click Mitigations</span>
+            <span class="text-emerald-700">Revenue Recovery</span>
+          </div>
+          <p class="text-[11px] text-[#5A5A54]">
+            With one click, activate a <strong>20% Promotional Discount</strong> at your POS to clear surplus pastries before closing, or flag remaining units for local charity food donation.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 4: Evening Closing Audit -->
+      <div class="warm-card p-6 border-l-4 border-l-blue-600 hover:shadow-md transition-shadow">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 font-bold text-sm flex items-center justify-center">4</span>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700">6:00 PM • Store Closing</span>
+              <h3 class="font-display font-bold text-base text-[#1C1C19]">Evening Check-In & Perishable Zero-Reset</h3>
+            </div>
+          </div>
+          <span class="p-2 rounded-lg bg-[#F3EFEA] text-lg">🌙</span>
+        </div>
+        <p class="text-xs text-[#5A5A54] leading-relaxed mb-4">
+          Closing staff walks through the fast touch-stepper audit to count remaining inventory on the shelves before locking up for the night.
+        </p>
+        <div class="p-3 rounded-xl bg-[#F9F7F2] border border-[#E5E0D8] text-xs space-y-1.5">
+          <div class="flex justify-between text-[11px] font-semibold text-[#1B4332]">
+            <span>Perishable Zero-Reset</span>
+            <span class="text-blue-800">Clean Slate Every Day</span>
+          </div>
+          <p class="text-[11px] text-[#5A5A54]">
+            One click zeroes out all unsold fresh baked goods so tomorrow morning's forecast always starts fresh without ghost stock carrying over.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Step 5: Continuous Growth (Full Width) -->
+    <div class="warm-card p-6 border-l-4 border-l-purple-600 hover:shadow-md transition-shadow">
+      <div class="flex items-start justify-between gap-3 mb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-800 font-bold text-sm flex items-center justify-center">5</span>
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-700">Ongoing Operations • Continuous Learning</span>
+            <h3 class="font-display font-bold text-base text-[#1C1C19]">Sales CSV Ingestion & Profit Simulation Reports</h3>
+          </div>
+        </div>
+        <span class="p-2 rounded-lg bg-[#F3EFEA] text-lg">📈</span>
+      </div>
+      <p class="text-xs text-[#5A5A54] leading-relaxed mb-4">
+        Whenever you have historical sales files (from Square, Clover, Shopify POS, or manual logs), upload them in <strong>Import CSV</strong>. The system automatically validates formats, dates, and non-negative numbers to retrain your shop's predictive model.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="p-3 rounded-xl bg-[#F9F7F2] border border-[#E5E0D8]">
+          <span class="font-bold text-[#1B4332] block mb-1">Financial Benchmark Reports</span>
+          <span class="text-[#5A5A54] text-[11px]">Compare your actual reduced waste ($ saved) and profit margins directly against traditional "gut feel" static ordering.</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#F9F7F2] border border-[#E5E0D8]">
+          <span class="font-bold text-[#1B4332] block mb-1">Always Replayable in Settings</span>
+          <span class="text-[#5A5A54] text-[11px]">Whenever you or new staff members need a refresher, this guided walkthrough and interactive tour can be reopened anytime from <strong>Store Settings</strong>.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Final Call to Action -->
+  <div class="warm-card p-6 text-center bg-[#F9F7F2] border border-[#E5E0D8] space-y-4">
+    <h3 class="font-display font-bold text-lg text-[#1B4332]">Ready to Start Managing Your Shop?</h3>
+    <p class="text-xs text-[#5A5A54] max-w-lg mx-auto">
+      You are all set! Click below to enter your personal dashboard, add your products, and see today's recommendations.
+    </p>
+
+    <div class="flex items-center justify-center gap-3 pt-2">
+      <button onclick="finishDemoAndGoDashboard()" 
+              class="px-6 py-3 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white font-bold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer">
+        <span>Go to My Personal Dashboard</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+async function finishDemoAndGoDashboard() {
+  try {
+    // Persist onboarding completed to database
+    await fetch('/api/v1/user/onboarding', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ completed: true })
+    });
+  } catch (err) {
+    console.warn("Could not persist onboarding state:", err);
+  }
+  // Navigate to dashboard
+  window.location.href = '/dashboard';
+}
+</script>
+{% endblock %}
+

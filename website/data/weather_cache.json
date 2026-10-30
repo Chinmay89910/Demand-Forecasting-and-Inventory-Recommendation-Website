@@ -1,0 +1,235 @@
+{
+  "live_weather": {
+    "shirpur, maharashtra": {
+      "temperature": 32,
+      "temperature_exact": 32.5,
+      "feels_like": 34.4,
+      "humidity": 43,
+      "precipitation_mm": 0.0,
+      "condition": "Sunny",
+      "icon": "☀️",
+      "wind_kmh": 8.1,
+      "weather_code": 1,
+      "day_of_week": "Friday",
+      "date_formatted": "Fri, 30 Oct 2026",
+      "traffic_impact": 12,
+      "traffic_boost_pct": 36,
+      "day_note": "Peak weekly volume with office gatherings and weekend preps.",
+      "insight_text": "Today is usually 36% busier than average for Friday. Weather: Sunny (32.5°C). Prepare a bit more of popular items!",
+      "updated_at": "2026-10-30T14:57:14.438175",
+      "updated_at_display": "02:57 PM",
+      "is_live": true,
+      "update_frequency": "minute-to-minute (60s)",
+      "source": "Open-Meteo Live API",
+      "coordinates": {
+        "lat": 21.3482,
+        "lon": 74.8804
+      },
+      "location": "Shirpur, Maharashtra",
+      "freshness_seconds": 0
+    }
+  },
+  "forecast_7d": {
+    "shirpur, maharashtra": {
+      "forecast": [
+        {
+          "date": "2026-10-30",
+          "date_formatted": "30 Oct 2026",
+          "date_short": "30 Oct",
+          "day_short": "Today",
+          "day_name": "Friday",
+          "temp": 32,
+          "temp_min": 23,
+          "temp_max": 32,
+          "precipitation_sum": 0.0,
+          "precipitation_probability": 8,
+          "condition": "Partly Cloudy",
+          "icon": "⛅",
+          "traffic_impact": 6,
+          "weather_code": 2,
+          "source": "Open-Meteo Forecast API"
+        },
+        {
+          "date": "2026-10-31",
+          "date_formatted": "31 Oct 2026",
+          "date_short": "31 Oct",
+          "day_short": "Sat",
+          "day_name": "Saturday",
+          "temp": 32,
+          "temp_min": 23,
+          "temp_max": 32,
+          "precipitation_sum": 0.0,
+          "precipitation_probability": 2,
+          "condition": "Cloudy",
+          "icon": "☁️",
+          "traffic_impact": -2,
+          "weather_code": 3,
+          "source": "Open-Meteo Forecast API"
+        },
+        {
+          "date": "2026-11-01",
+          "date_formatted": "01 Nov 2026",
+          "date_short": "01 Nov",
+          "day_short": "Sun",
+          "day_name": "Sunday",
+          "temp": 33,
+          "temp_min": 24,
+          "temp_max": 33,
+          "precipitation_sum": 0.0,
+          "precipitation_probability": 24,
+          "condition": "Cloudy",
+          "icon": "☁️",
+          "traffic_impact": -2,
+          "weather_code": 3,
+          "source": "Open-Meteo Forecast API"
+        },
+        {
+          "date": "2026-11-02",
+          "date_formatted": "02 Nov 2026",
+          "date_short": "02 Nov",
+          "day_short": "Mon",
+          "day_name": "Monday",
+          "temp": 32,
+          "temp_min": 24,
+          "temp_max": 32,
+          "precipitation_sum": 0.7,
+          "precipitation_probability": 42,
+          "condition": "Partly Cloudy",
+          "icon": "⛅",
+          "traffic_impact": 6,
+          "weather_code": 53,
+          "source": "Open-Meteo Forecast API"
+        },
+        {
+          "date": "2026-11-03",
+          "date_formatted": "03 Nov 2026",
+          "date_short": "03 Nov",
+          "day_short": "Tue",
+          "day_name": "Tuesday",
+          "temp": 34,
+          "temp_min": 23,
+          "temp_max": 34,
+          "precipitation_sum": 0.3,
+          "precipitation_probability": 45,
+          "condition": "Partly Cloudy",
+          "icon": "⛅",
+          "traffic_impact": 6,
+          "weather_code": 51,
+          "source": "Open-Meteo Forecast API"
+        },
+        {
+          "date": "2026-11-04",
+          "date_formatted": "04 Nov 2026",
+          "date_short": "04 Nov",
+          "day_short": "Wed",
+          "day_name": "Wednesday",
+          "temp": 34,
+          "temp_min": 24,
+          "temp_max": 34,
+          "precipitation_sum": 0.3,
+          "precipitation_probability": 25,
+          "condition": "Partly Cloudy",
+          "icon": "⛅",
+          "traffic_impact": 6,
+          "weather_code": 51,
+          "source": "Open-Meteo Forecast API"
+        },
+        {
+          "date": "2026-11-05",
+          "date_formatted": "05 Nov 2026",
+          "date_short": "05 Nov",
+          "day_short": "Thu",
+          "day_name": "Thursday",
+          "temp": 34,
+          "temp_min": 23,
+          "temp_max": 34,
+          "precipitation_sum": 0.0,
+          "precipitation_probability": 15,
+          "condition": "Sunny",
+          "icon": "☀️",
+          "traffic_impact": 12,
+          "weather_code": 1,
+          "source": "Open-Meteo Forecast API"
+        }
+      ],
+      "updated_at": "2026-10-30T14:57:15.159971"
+    }
+  },
+  "geocoding": {
+    "shirpur": [
+      21.3482,
+      74.8804
+    ],
+    "mumbai": [
+      19.076,
+      72.8777
+    ],
+    "pune": [
+      18.5204,
+      73.8567
+    ],
+    "delhi": [
+      28.6139,
+      77.209
+    ],
+    "bangalore": [
+      12.9716,
+      77.5946
+    ],
+    "nashik": [
+      19.9975,
+      73.7898
+    ],
+    "nagpur": [
+      21.1458,
+      79.0882
+    ]
+  },
+  "historical": {
+    "shirpur, maharashtra_2024-10-01_2024-10-05": {
+      "location": "Shirpur, Maharashtra",
+      "start_date": "2024-10-01",
+      "end_date": "2024-10-05",
+      "records_count": 5,
+      "daily_records": [
+        {
+          "date": "2024-10-01",
+          "temp_max": 32.5,
+          "temp_min": 24.2,
+          "precipitation_sum": 2.2,
+          "weather_code": 61
+        },
+        {
+          "date": "2024-10-02",
+          "temp_max": 33.3,
+          "temp_min": 24.7,
+          "precipitation_sum": 1.2,
+          "weather_code": 53
+        },
+        {
+          "date": "2024-10-03",
+          "temp_max": 32.2,
+          "temp_min": 25.3,
+          "precipitation_sum": 0.3,
+          "weather_code": 51
+        },
+        {
+          "date": "2024-10-04",
+          "temp_max": 31.5,
+          "temp_min": 24.4,
+          "precipitation_sum": 0.6,
+          "weather_code": 51
+        },
+        {
+          "date": "2024-10-05",
+          "temp_max": 31.8,
+          "temp_min": 24.1,
+          "precipitation_sum": 0.3,
+          "weather_code": 51
+        }
+      ],
+      "source": "Open-Meteo Archive API"
+    }
+  },
+  "last_saved": "2026-10-30T09:27:15.802585+00:00"
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bgCheese" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="cheeseBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="60%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="crust" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#78350F"/>
+    </linearGradient>
+    <linearGradient id="berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BE123C"/>
+      <stop offset="100%" stop-color="#881337"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bgCheese)"/>
+  <g transform="translate(10, 10)">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="85" rx="36" ry="7" fill="#78350F" opacity="0.15"/>
+    <!-- Graham crust bottom & back -->
+    <polygon points="18,74 82,50 82,58 18,82" fill="url(#crust)"/>
+    <!-- Cheesecake wedge side -->
+    <polygon points="18,52 82,30 82,50 18,74" fill="url(#cheeseBody)"/>
+    <!-- Cheesecake wedge front face -->
+    <polygon points="18,52 46,38 82,30 54,44" fill="#FEF9C3"/>
+    <!-- Strawberry glaze on top -->
+    <path d="M 46,38 Q 62,34 82,30 Q 76,38 72,40 Q 64,36 54,44 Z" fill="url(#berry)"/>
+    <!-- Glaze drips -->
+    <path d="M 72,40 C 72,46 75,48 74,52 C 73,50 71,46 70,42 Z" fill="url(#berry)"/>
+  </g>
+</svg>

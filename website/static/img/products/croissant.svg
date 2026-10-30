@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+    <linearGradient id="croissant" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="35%" stop-color="#F59E0B"/>
+      <stop offset="70%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FDE68A" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="24" fill="url(#bg)"/>
+  <g transform="translate(10, 8)">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="85" rx="36" ry="7" fill="#78350F" opacity="0.15"/>
+    <!-- Outer Crescent -->
+    <path d="M 12,65 C 8,42 26,18 50,18 C 74,18 92,42 88,65 C 85,78 72,84 50,84 C 28,84 15,78 12,65 Z" fill="url(#croissant)"/>
+    <!-- Middle fold -->
+    <path d="M 22,62 C 18,44 32,26 50,26 C 68,26 82,44 78,62 C 73,72 63,77 50,77 C 37,77 27,72 22,62 Z" fill="#F59E0B"/>
+    <!-- Center plump roll -->
+    <path d="M 33,58 C 30,42 39,32 50,32 C 61,32 70,42 67,58 C 63,68 57,72 50,72 C 43,72 37,68 33,58 Z" fill="#FBBF24"/>
+    <!-- Baker crust ridges -->
+    <path d="M 30,38 C 36,46 42,54 44,66" stroke="#92400E" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <path d="M 50,32 C 50,44 50,54 50,68" stroke="#78350F" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <path d="M 70,38 C 64,46 58,54 56,66" stroke="#92400E" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <!-- Glaze reflection -->
+    <ellipse cx="50" cy="38" rx="14" ry="4" fill="url(#shine)"/>
+    <ellipse cx="34" cy="46" rx="6" ry="2.5" transform="rotate(-25 34 46)" fill="url(#shine)"/>
+    <ellipse cx="66" cy="46" rx="6" ry="2.5" transform="rotate(25 66 46)" fill="url(#shine)"/>
+  </g>
+</svg>

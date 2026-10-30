@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and testing artifacts
+.pytest_cache/
+env/
+venv/
+.venv/
+ENV/
+
+# Environment secrets and credentials (use .env.example instead)
+.env
+*.local
+
+# Logs and temp files
+*.log
+*.sqlite
+*.sqlite3
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Offline experimental research notebooks and massive datasets (not used by live website)
+CAPSTONE_PROJECT/

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account & Shop | RestockIQ{% endblock %}
+
+{% block auth_box %}
+<div class="max-w-md mx-auto my-8 sm:my-12">
+  <div class="warm-card p-6 sm:p-8">
+    
+    <div class="text-center mb-6">
+      <span class="inline-block p-3 rounded-2xl bg-[#F3EFEA] text-2xl mb-2">🏪</span>
+      <h1 class="font-display font-bold text-2xl text-[#1B4332]">Create Account & Shop</h1>
+      <p class="text-xs text-[#5A5A54] mt-1">Start optimizing inventory, day-ahead forecasts, and eliminating food waste</p>
+    </div>
+
+    {% if error %}
+    <div class="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+      <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
+      <span>{{ error }}</span>
+    </div>
+    {% endif %}
+
+    <form id="register-form" action="/register" method="POST" class="space-y-4" onsubmit="handleRegisterSubmit(event)">
+      
+      <!-- Full Name -->
+      <div>
+        <label for="name" class="block text-xs font-semibold text-[#1C1C19] mb-1">Your Full Name <span class="text-red-500">*</span></label>
+        <input type="text" id="name" name="name" required placeholder="Claire Dupont"
+               value="{{ submitted_name or '' }}"
+               class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-4 py-2.5 text-sm text-[#1C1C19] focus:outline-none focus:border-[#1B4332] transition-colors">
+      </div>
+
+      <!-- Email Address -->
+      <div>
+        <label for="email" class="block text-xs font-semibold text-[#1C1C19] mb-1">Email Address <span class="text-red-500">*</span></label>
+        <input type="email" id="email" name="email" required placeholder="claire@bakery.com"
+               value="{{ submitted_email or '' }}"
+               class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-4 py-2.5 text-sm text-[#1C1C19] focus:outline-none focus:border-[#1B4332] transition-colors">
+      </div>
+
+      <!-- Password & Confirm -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label for="password" class="block text-xs font-semibold text-[#1C1C19] mb-1">Password <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <input type="password" id="password" name="password" required placeholder="Min 6 chars"
+                   class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl pl-3 pr-8 py-2.5 text-sm text-[#1C1C19] focus:outline-none focus:border-[#1B4332] transition-colors">
+            <button type="button" onclick="togglePasswordVisibility('password', 'toggle-p1-icon')" 
+                    class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#5A5A54] hover:text-[#1C1C19] cursor-pointer">
+              <i id="toggle-p1-icon" data-lucide="eye" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label for="confirm_password" class="block text-xs font-semibold text-[#1C1C19] mb-1">Confirm <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <input type="password" id="confirm_password" name="confirm_password" required placeholder="Re-enter password"
+                   class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl pl-3 pr-8 py-2.5 text-sm text-[#1C1C19] focus:outline-none focus:border-[#1B4332] transition-colors">
+            <button type="button" onclick="togglePasswordVisibility('confirm_password', 'toggle-p2-icon')" 
+                    class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#5A5A54] hover:text-[#1C1C19] cursor-pointer">
+              <i id="toggle-p2-icon" data-lucide="eye" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shop Name & Type -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label for="shop_name" class="block text-xs font-semibold text-[#1C1C19] mb-1">Bakery / Shop Name</label>
+          <input type="text" id="shop_name" name="shop_name" placeholder="Artisan Sourdough"
+                 value="{{ submitted_shop_name or '' }}"
+                 class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-3 py-2.5 text-sm text-[#1C1C19] focus:outline-none focus:border-[#1B4332] transition-colors">
+        </div>
+
+        <div>
+          <label for="shop_type" class="block text-xs font-semibold text-[#1C1C19] mb-1">Business Type</label>
+          <select id="shop_type" name="shop_type"
+                  class="w-full bg-[#FCF9F4] border border-[#E5E0D8] rounded-xl px-3 py-2.5 text-sm text-[#1C1C19] focus:outline-none focus:border-[#1B4332] transition-colors">
+            <option value="Bakery" {% if submitted_shop_type == 'Bakery' %}selected{% endif %}>Artisan Bakery</option>
+            <option value="Café" {% if submitted_shop_type == 'Café' %}selected{% endif %}>Café & Pastry</option>
+            <option value="Delicatessen" {% if submitted_shop_type == 'Delicatessen' %}selected{% endif %}>Delicatessen</option>
+            <option value="Quick-Service" {% if submitted_shop_type == 'Quick-Service' %}selected{% endif %}>Quick-Service Food</option>
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" name="role" value="owner">
+
+      <!-- Submit Button -->
+      <button id="register-btn" type="submit" class="w-full py-3 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-sm font-semibold transition-all shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center gap-2">
+        <span id="register-btn-text">Create Account & Open Shop</span>
+        <i id="register-btn-icon" data-lucide="arrow-right" class="w-4 h-4"></i>
+        <span id="register-btn-spinner" class="hidden animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+      </button>
+    </form>
+
+    <!-- Return to Login -->
+    <div class="mt-6 text-center text-xs text-[#5A5A54]">
+      Already registered? 
+      <a href="/login" class="text-[#1B4332] font-semibold hover:underline">Sign In to Dashboard</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto my-8 sm:my-12">
+  <div class="warm-card p-6 sm:p-8">
+    <div class="text-center mb-6">
+      <span class="inline-block p-3 rounded-2xl bg-[#F3EFEA] text-2xl mb-2">🏪</span>
+      <h1 class="font-display font-bold text-2xl text-[#1B4332]">Create Account & Shop</h1>
+      <p class="text-xs text-[#5A5A54] mt-1">Start optimizing inventory, day-ahead forecasts, and eliminating food waste</p>
+    </div>
+    <div class="mt-6 text-center text-xs text-[#5A5A54]">
+      Already registered? 
+      <a href="/login" class="text-[#1B4332] font-semibold hover:underline">Sign In to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function togglePasswordVisibility(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    icon.setAttribute("data-lucide", "eye-off");
+  } else {
+    input.type = "password";
+    icon.setAttribute("data-lucide", "eye");
+  }
+  if (window.lucide) { lucide.createIcons(); }
+}
+
+function handleRegisterSubmit(event) {
+  const p1 = document.getElementById("password").value;
+  const p2 = document.getElementById("confirm_password").value;
+  if (p1 !== p2) {
+    event.preventDefault();
+    alert("Passwords do not match. Please re-enter matching passwords.");
+    return false;
+  }
+  const btn = document.getElementById("register-btn");
+  const text = document.getElementById("register-btn-text");
+  const icon = document.getElementById("register-btn-icon");
+  const spinner = document.getElementById("register-btn-spinner");
+
+  btn.disabled = true;
+  btn.classList.add("opacity-80", "cursor-not-allowed");
+  text.textContent = "Creating Your Account & Shop...";
+  icon.classList.add("hidden");
+  spinner.classList.remove("hidden");
+}
+</script>
+{% endblock %}

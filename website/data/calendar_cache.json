@@ -1,0 +1,1233 @@
+{
+  "events_by_date": {
+    "2026-01-01": [
+      {
+        "date": "2026-01-01",
+        "name": "New Year's Day",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-01-03": [
+      {
+        "date": "2026-01-03",
+        "name": "Hazarat Ali's Birthday",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-01-14": [
+      {
+        "date": "2026-01-14",
+        "name": "Makar Sankranti / Magha Bihu / Pongal",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": true
+      }
+    ],
+    "2026-01-23": [
+      {
+        "date": "2026-01-23",
+        "name": "Sri Panchami, Basant Panchami",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-01-26": [
+      {
+        "date": "2026-01-26",
+        "name": "Republic Day",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      }
+    ],
+    "2026-02-01": [
+      {
+        "date": "2026-02-01",
+        "name": "Guru Ravi Das's Birthday",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-02-12": [
+      {
+        "date": "2026-02-12",
+        "name": "Birthday of Swami Dayananda Saraswati",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-02-15": [
+      {
+        "date": "2026-02-15",
+        "name": "Mahashivratri",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-02-15",
+        "name": "Maha Shivratri",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-02-19": [
+      {
+        "date": "2026-02-19",
+        "name": "Chhatrapati Shivaji Maharaj Jayanti",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-02-19",
+        "name": "Chhatrapati Shivaji Maharaj's Jayanti",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "statutory_calendar_engine",
+        "source_url": "https://pypi.org/project/holidays/",
+        "description": "Officially notified public holiday in Maharashtra (Chhatrapati Shivaji Maharaj's Jayanti)",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-02-19",
+        "name": "Shiva ji Jayanti",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-03-03": [
+      {
+        "date": "2026-03-03",
+        "name": "Holika dahan / Dolyatra",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      },
+      {
+        "date": "2026-03-03",
+        "name": "Holi (Second Day)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-03-04": [
+      {
+        "date": "2026-03-04",
+        "name": "Holi",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-03-19": [
+      {
+        "date": "2026-03-19",
+        "name": "Gudi Padwa",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-03-19",
+        "name": "Chaitra Sukladi / Gudi Padava/ Ugadi/ Cheti Chand",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-03-20": [
+      {
+        "date": "2026-03-20",
+        "name": "Eid ul-Fitr",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "indian-festival-api",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "Festival marking the end of Ramadan, the Islamic holy month of fasting. Celebrated with prayers, family gatherings, and feasting.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": true,
+        "is_festival": true,
+        "religion": "islam",
+        "tags": [
+          "islam",
+          "ramadan",
+          "fasting",
+          "celebration",
+          "namaz"
+        ]
+      },
+      {
+        "date": "2026-03-20",
+        "name": "Jamat- Ul- Vida",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-03-21": [
+      {
+        "date": "2026-03-21",
+        "name": "Id- ul- Fitr",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-03-21",
+        "name": "Ramzan-Id (Id-Ul-Fitra / Shawal-1)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-03-26": [
+      {
+        "date": "2026-03-26",
+        "name": "Ram Navami",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-03-31": [
+      {
+        "date": "2026-03-31",
+        "name": "Mahavir Jayanti",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-03-31",
+        "name": "Mahavir Janmakalyanak",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-04-03": [
+      {
+        "date": "2026-04-03",
+        "name": "Good Friday",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      }
+    ],
+    "2026-04-05": [
+      {
+        "date": "2026-04-05",
+        "name": "Easter Sunday",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": true
+      }
+    ],
+    "2026-04-14": [
+      {
+        "date": "2026-04-14",
+        "name": "Dr. Babasaheb Ambedkar Jayanti",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      },
+      {
+        "date": "2026-04-14",
+        "name": "Birthday of Dr. B.R. Ambedkar",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-04-14",
+        "name": "Dr. B. R. Ambedkar's Jayanti",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "statutory_calendar_engine",
+        "source_url": "https://pypi.org/project/holidays/",
+        "description": "Officially notified public holiday in Maharashtra (Dr. B. R. Ambedkar's Jayanti)",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-04-14",
+        "name": "Vaisakhi / Vishu / Meshadi (Tamil New Year's Day)",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-04-15": [
+      {
+        "date": "2026-04-15",
+        "name": "Vaisakhadi (Bengal) / Bahag Bihu (Assam)",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-05-01": [
+      {
+        "date": "2026-05-01",
+        "name": "Budha Purnima",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-05-01",
+        "name": "Maharashtra Din / Buddha Purnima",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-05-01",
+        "name": "Buddha Purnima; Maharashtra Day",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "statutory_calendar_engine",
+        "source_url": "https://pypi.org/project/holidays/",
+        "description": "Officially notified public holiday in Maharashtra (Buddha Purnima; Maharashtra Day)",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-05-09": [
+      {
+        "date": "2026-05-09",
+        "name": "Birthday of Guru Rabindranath Tagore",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-05-28": [
+      {
+        "date": "2026-05-28",
+        "name": "Id- ul- Zuha (Bakrid)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-05-28",
+        "name": "Bakri Id (Id-Uz-Zuha)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-06-26": [
+      {
+        "date": "2026-06-26",
+        "name": "Muharram",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-06-26",
+        "name": "Moharram",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-07-16": [
+      {
+        "date": "2026-07-16",
+        "name": "Rath Yatra",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-08-15": [
+      {
+        "date": "2026-08-15",
+        "name": "Independence Day",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      },
+      {
+        "date": "2026-08-15",
+        "name": "Parsi New Year's day/ Nauraj",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-08-26": [
+      {
+        "date": "2026-08-26",
+        "name": "Milad- un- Nabi or Id- e- Milad (Birthday of Prophet Mohammad)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-08-26",
+        "name": "Id-E-Milad",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-08-26",
+        "name": "Milad-un-Nabi",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "statutory_calendar_engine",
+        "source_url": "https://pypi.org/project/holidays/",
+        "description": "Officially notified public holiday in Maharashtra (Milad-un-Nabi)",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-08-26",
+        "name": "Onam or Thiru Onam Day",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-08-28": [
+      {
+        "date": "2026-08-28",
+        "name": "Raksha Bandhan",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-09-04": [
+      {
+        "date": "2026-09-04",
+        "name": "Milad-un-Nabi",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "indian-festival-api",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "Celebrates the birthday of the Islamic prophet Muhammad. Observed with processions, prayers, and charitable acts.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": true,
+        "is_festival": true,
+        "religion": "islam",
+        "tags": [
+          "islam",
+          "prophet",
+          "muhammad",
+          "birthday"
+        ]
+      },
+      {
+        "date": "2026-09-04",
+        "name": "Janmashtami (Vaishnva)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-09-04",
+        "name": "Janmashtami (Vaishnava)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "statutory_calendar_engine",
+        "source_url": "https://pypi.org/project/holidays/",
+        "description": "Officially notified public holiday in Maharashtra (Janmashtami (Vaishnava))",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-09-14": [
+      {
+        "date": "2026-09-14",
+        "name": "Ganesh Chaturthi / Vinayaka Chaturthi",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-10-02": [
+      {
+        "date": "2026-10-02",
+        "name": "Mahatma Gandhi's Birthday",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      }
+    ],
+    "2026-10-18": [
+      {
+        "date": "2026-10-18",
+        "name": "Dusshera (Saptami)",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-10-19": [
+      {
+        "date": "2026-10-19",
+        "name": "Dussehra (Mahashtami)",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-10-20": [
+      {
+        "date": "2026-10-20",
+        "name": "Dussehra",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-10-20",
+        "name": "Dasara",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-10-26": [
+      {
+        "date": "2026-10-26",
+        "name": "Maharishi Valmiki's Birthday",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-10-29": [
+      {
+        "date": "2026-10-29",
+        "name": "Karaka Chaturthi (Karwa Chouth)",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-11-08": [
+      {
+        "date": "2026-11-08",
+        "name": "Diwali (Deepavali)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-11-08",
+        "name": "Naraka Chaturdasi",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-11-09": [
+      {
+        "date": "2026-11-09",
+        "name": "Govardhan Puja",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-11-10": [
+      {
+        "date": "2026-11-10",
+        "name": "Diwali (Bali Pratipada)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "state",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-11-11": [
+      {
+        "date": "2026-11-11",
+        "name": "Bhai Duj",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-11-15": [
+      {
+        "date": "2026-11-15",
+        "name": "Pratihar Shashthi or Surya Shashthi (Chhat Puja)",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-11-24": [
+      {
+        "date": "2026-11-24",
+        "name": "Guru Nanak's Birthday",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      },
+      {
+        "date": "2026-11-24",
+        "name": "Guru Teg Bahadur's Martyrdom Day",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-12-23": [
+      {
+        "date": "2026-12-23",
+        "name": "Hazarat Ali's Birthday",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-12-24": [
+      {
+        "date": "2026-12-24",
+        "name": "Christmas Eve",
+        "type": "restricted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render)",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Restricted Holiday",
+        "verification_status": "restricted_optional",
+        "is_public_holiday": false,
+        "is_festival": false
+      }
+    ],
+    "2026-12-25": [
+      {
+        "date": "2026-12-25",
+        "name": "Christmas Day",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "all",
+        "level": "national",
+        "source": "calendar-api-web (Render) + statutory_calendar_engine + indian-festival-api",
+        "source_url": "https://www.india.gov.in/calendar",
+        "description": "Gazetted Holiday",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": true
+      }
+    ],
+    "2026-05-27": [
+      {
+        "date": "2026-05-27",
+        "name": "Eid ul-Adha",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "indian-festival-api",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "Festival of sacrifice, commemorating Prophet Ibrahim's willingness to sacrifice his son as an act of obedience to God.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": true,
+        "is_festival": true,
+        "religion": "islam",
+        "tags": [
+          "islam",
+          "sacrifice",
+          "pilgrimage",
+          "hajj"
+        ]
+      },
+      {
+        "date": "2026-05-27",
+        "name": "Id-ul-Zuha (Bakrid)",
+        "type": "gazetted_holiday",
+        "country": "IN",
+        "state": "MH",
+        "level": "national",
+        "source": "statutory_calendar_engine",
+        "source_url": "https://pypi.org/project/holidays/",
+        "description": "Officially notified public holiday in Maharashtra (Id-ul-Zuha (Bakrid))",
+        "verification_status": "verified_gazetted",
+        "is_public_holiday": true,
+        "is_festival": false
+      }
+    ],
+    "2026-01-24": [
+      {
+        "date": "2026-01-24",
+        "name": "Vasant Panchami",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "cultural",
+        "source": "indian-festival-api",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "Festival dedicated to Goddess Saraswati, marking the arrival of spring. Yellow color is significant.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": false,
+        "is_festival": true,
+        "religion": "hindu",
+        "tags": [
+          "spring",
+          "saraswati",
+          "education",
+          "yellow"
+        ]
+      }
+    ],
+    "2026-10-15": [
+      {
+        "date": "2026-10-15",
+        "name": "Navratri",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "cultural",
+        "source": "indian-festival-api",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "Nine-night festival dedicated to the nine forms of Goddess Durga. Famous for Garba and Dandiya in Gujarat.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": false,
+        "is_festival": true,
+        "religion": "hindu",
+        "tags": [
+          "durga",
+          "garba",
+          "dandiya",
+          "9-night",
+          "gujarat"
+        ]
+      }
+    ],
+    "2026-11-06": [
+      {
+        "date": "2026-11-06",
+        "name": "Dhanteras",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "cultural",
+        "source": "Panchang Astronomical Anchor (Kartik Trayodashi, 2 days before Diwali)",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "First day of five-day Diwali celebration. Auspicious day for purchasing gold, silver, and utensils.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": false,
+        "is_festival": true,
+        "religion": "hindu",
+        "tags": [
+          "diwali",
+          "gold",
+          "wealth",
+          "shopping",
+          "lakshmi"
+        ],
+        "date_2026": "2026-11-06"
+      }
+    ],
+    "2026-08-22": [
+      {
+        "date": "2026-08-22",
+        "name": "Paryushana",
+        "type": "festival",
+        "country": "IN",
+        "state": "MH",
+        "level": "cultural",
+        "source": "indian-festival-api",
+        "source_url": "https://indian-festival-api.vercel.app/api/festivals",
+        "description": "Most important Jain festival. Period of fasting, prayer, and forgiveness lasting 8 to 10 days.",
+        "verification_status": "verified_cultural_festival",
+        "is_public_holiday": false,
+        "is_festival": true,
+        "religion": "jain",
+        "tags": [
+          "jain",
+          "fasting",
+          "forgiveness",
+          "michhami-dukkadam"
+        ]
+      }
+    ]
+  },
+  "last_refreshed": "2026-10-30T00:44:32.152809",
+  "provider_status": {
+    "primary": "healthy (69 records)",
+    "statutory_engine": "healthy (22 records)",
+    "supplementary": "healthy (16 verified festivals, 15 quarantined)"
+  },
+  "warnings": [
+    "Quarantined unverified 'Maha Shivratri' on 2026-02-18 (diverges from authoritative date ['2026-02-15']).",
+    "Quarantined unverified 'Holika Dahan' on 2026-03-02 (diverges from authoritative date ['2026-03-03', '2026-03-04']).",
+    "Quarantined unverified 'Gudi Padwa' on 2026-03-30 (diverges from authoritative date ['2026-03-19']).",
+    "Quarantined unverified 'Ram Navami' on 2026-04-06 (diverges from authoritative date ['2026-03-26']).",
+    "Quarantined unverified 'Mahavir Jayanti' on 2026-04-07 (diverges from authoritative date ['2026-03-31']).",
+    "Quarantined unverified 'Buddha Purnima' on 2026-05-12 (diverges from authoritative date ['2026-05-01']).",
+    "Quarantined unverified 'Muharram' on 2026-06-17 (diverges from authoritative date ['2026-06-26']).",
+    "Quarantined unverified 'Raksha Bandhan' on 2026-08-09 (diverges from authoritative date ['2026-08-28']).",
+    "Quarantined unverified 'Janmashtami' on 2026-08-19 (diverges from authoritative date ['2026-09-04']).",
+    "Quarantined unverified 'Ganesh Chaturthi' on 2026-08-20 (diverges from authoritative date ['2026-09-14']).",
+    "Quarantined unverified 'Dussehra' on 2026-10-23 (diverges from authoritative date ['2026-10-19', '2026-10-20']).",
+    "Quarantined unverified 'Dhanteras' on 2026-10-30 (diverges from authoritative date ['2026-11-06']).",
+    "Quarantined unverified 'Diwali' on 2026-11-01 (diverges from authoritative date ['2026-11-08', '2026-11-10']).",
+    "Quarantined unverified 'Bhai Dooj' on 2026-11-03 (diverges from authoritative date ['2026-11-11']).",
+    "Quarantined unverified 'Guru Nanak Jayanti' on 2026-11-14 (diverges from authoritative date ['2026-11-24'])."
+  ],
+  "last_refreshed_display": "30 Oct 2026, 12:00 AM",
+  "sync_schedule": "Daily 12:00 AM",
+  "last_midnight_sync": "2026-10-30T00:44:31.014705"
+}
